@@ -10,4 +10,11 @@ remembering usernames and passwords.
 
 This project is of interest to me since I have always had trouble keeping my passwords and usernames in one place, which
 has caused me much more inconvenience than necessary in certain situations. I believe that this application will help
-myself and others to be more organized.
+myself and others like me to be more organized.
+
+## User Stories
+
+- As a user, I want to be able to add an entry consisting of a website URL and password to the password manager.
+- As a user, I want to be able to modify entries and remove them from the list.
+- As a user, I want to be able to search for a specific website name in order to receive its associated password.
+- As a user, I want to be able to view the number of entries in the password manager and display them as a list.
