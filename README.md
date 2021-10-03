@@ -14,7 +14,11 @@ myself and others like me to be more organized.
 
 ## User Stories
 
-- As a user, I want to be able to add an entry consisting of a website URL and password to the password manager.
+- As a user, I want to be able to add an entry consisting of a website URL, username,
+and password to the password manager.
 - As a user, I want to be able to modify entries and remove them from the list.
 - As a user, I want to be able to search for a specific website name in order to receive its associated password.
 - As a user, I want to be able to view the number of entries in the password manager and display them as a list.
+- As a user, I want to be able to mark entries as important, and have the option to display only important entries.
+- As a user, I want to be able to have my websites and passwords saved, so they will appear even after the application 
+is closed.
