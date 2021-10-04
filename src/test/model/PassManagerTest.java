@@ -15,9 +15,9 @@ class PassManagerTest {
     public void setUp() {
 
         ptest = new PassManager();
-        e1 = new Entry("www.google.com", "Jim", "12345");
-        e2 = new Entry("www.facebook.com", "Bob", "abcde");
-        e3 = new Entry("www.twitter.com", "Tim", "password");
+        e1 = new Entry("www.google.com", "Jim", "12345", false);
+        e2 = new Entry("www.facebook.com", "Bob", "abcde", false);
+        e3 = new Entry("www.twitter.com", "Tim", "password", false);
 
     }
 

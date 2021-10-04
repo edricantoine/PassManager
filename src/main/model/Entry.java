@@ -10,11 +10,11 @@ public class Entry {
 
     //REQUIRES: w and p both have length greater than zero
     //EFFECTS: sets this entry's website to string w, and the password to string p
-    public Entry(String w, String u, String p) {
+    public Entry(String w, String u, String p, Boolean i) {
         this.website = w;
         this.username = u;
         this.password = p;
-        this.isImportant = false;
+        this.isImportant = i;
     }
 
     //getters

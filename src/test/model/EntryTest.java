@@ -7,7 +7,7 @@ public class EntryTest {
 
     @BeforeEach
     public void setUp() {
-        e = new Entry("www.google.com", "Jim", "password");
+        e = new Entry("www.google.com", "Jim", "password,", false);
     }
 
     @Test

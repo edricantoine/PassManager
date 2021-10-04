@@ -54,7 +54,36 @@ public class PassManagerApp {
     }
 
     private void addToManager() {
-        System.out.println("Adding to manager...");
+        String userWeb;
+        String userName;
+        String userPass;
+        String userImportant;
+        System.out.println("Please enter the website name: ");
+        userWeb = input.next();
+        System.out.println("Please enter your username: ");
+        userName = input.next();
+        System.out.println("Please enter the password: ");
+        userPass = input.next();
+        System.out.println("Would you like to mark this as important?");
+        System.out.println("y : yes");
+        System.out.println("n : no");
+        userImportant = input.next();
+
+        if (userImportant.equals("y")) {
+
+            manager.addEntry(new Entry(userWeb, userName, userPass, true));
+            System.out.println("Successfully added.");
+
+        } else if (userImportant.equals("n")) {
+
+            manager.addEntry(new Entry(userWeb, userName, userPass, false));
+            System.out.println("Successfully added.");
+
+        } else {
+
+            System.out.println("Invalid input.");
+
+        }
     }
 
     private void modifyRemove() {
@@ -62,21 +91,30 @@ public class PassManagerApp {
     }
 
     private void searchEntries() {
-        System.out.println("Searching entries...");
+        String searchSite;
+        System.out.println("Website name (BE EXACT WITH SPELLING): ");
+        searchSite = input.next();
+        System.out.println(manager.retrieveString(searchSite));
     }
 
     private void displayEntries() {
-        System.out.println("Displaying entries...");
+        for (Entry e : manager.getEntries()) {
+            System.out.println(e.entryString());
+        }
     }
 
     private void displayImportantEntries() {
-        System.out.println("Importance");
+        for (Entry e : manager.getEntries()) {
+            if (e.getImportant()) {
+                System.out.println(e.entryString());
+            }
+        }
     }
 
 
     private void welcomeMenu() {
         System.out.println("Welcome to Edric's Password Manager.");
-        System.out.println("You currently have " + manager.getNumEntries() + " passwords saved.");
+        System.out.println("You currently have " + manager.getNumEntries() + " password(s)  saved.");
         System.out.println("What would you like to do?");
         System.out.println("a: add an entry");
         if (manager.getNumEntries() > 0) {
