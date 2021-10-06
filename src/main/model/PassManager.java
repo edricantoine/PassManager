@@ -57,12 +57,22 @@ public class PassManager {
     //EFFECTS: if an entry exists with website same as key, that entry's string format is returned.
     public String retrieveString(String key) {
         for (Entry e : this.entries) {
-            if (e.getWebsite().equals(key)) {
+            if (e.getLabel().equals(key)) {
                 return e.entryString();
             }
         }
 
         return "Website not found in list.";
+    }
+
+    public Entry retrieveEntry(String key) {
+        for (Entry e : this.entries) {
+            if (e.getLabel().equals(key)) {
+                return e;
+            }
+        }
+
+        return null;
     }
 
 }

@@ -58,13 +58,13 @@ public class PassManagerApp {
         String userName;
         String userPass;
         String userImportant;
-        System.out.println("Please enter the website name: ");
+        System.out.println("Choose a label for this entry: ");
         userWeb = input.next();
         System.out.println("Please enter your username: ");
         userName = input.next();
         System.out.println("Please enter the password: ");
         userPass = input.next();
-        System.out.println("Would you like to mark this as important?");
+        System.out.println("Would you like to mark this entry as important?");
         System.out.println("y : yes");
         System.out.println("n : no");
         userImportant = input.next();
@@ -86,13 +86,61 @@ public class PassManagerApp {
         }
     }
 
-    private void modifyRemove() {
-        System.out.println("Modifying/removing...");
+    public void modifyRemove() {
+        String choice;
+        Entry chosenEntry;
+        String chosenWeb;
+        System.out.println("Type the label of the entry you would like to modify:");
+        chosenWeb = input.next();
+        chosenEntry = manager.retrieveEntry(chosenWeb);
+        if (chosenEntry == null) {
+            System.out.println("Entry not found in list.");
+        } else {
+            modifyRemoveMenu();
+            choice = input.next();
+            if (choice.equals("u")) {
+                handleChangeUsername(chosenEntry);
+            } else if (choice.equals("p")) {
+                handleChangePass(chosenEntry);
+            } else if (choice.equals("i")) {
+                handleToggleImportant(chosenEntry);
+            } else if (choice.equals("r")) {
+                handleRemoval(chosenEntry);
+            } else {
+                System.out.println("Invalid input.");
+            }
+        }
+
+
+    }
+
+    private void handleChangeUsername(Entry ce) {
+        System.out.println("chage");
+    }
+
+    private void handleChangePass(Entry ce) {
+        System.out.println("chage apss");
+    }
+
+    private void handleToggleImportant(Entry ce) {
+        System.out.println("impoernt");
+    }
+
+    private void handleRemoval(Entry ce) {
+        System.out.println("hhh");
+    }
+
+    private void modifyRemoveMenu() {
+        System.out.println("u: change username");
+        System.out.println("p: change password");
+        System.out.println("i: toggle importance");
+        System.out.println("r: remove this entry");
+
     }
 
     private void searchEntries() {
         String searchSite;
-        System.out.println("Website name (BE EXACT WITH SPELLING): ");
+        System.out.println("Label name (BE EXACT WITH SPELLING): ");
         searchSite = input.next();
         System.out.println(manager.retrieveString(searchSite));
     }

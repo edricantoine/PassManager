@@ -75,5 +75,13 @@ class PassManagerTest {
         assertEquals(ptest.retrieveString("www.facebook.com"),
                 "Website: www.facebook.com Username: Bob Password: abcde");
         assertEquals(ptest.retrieveString("www.4chan.org"), "Website not found in list.");
+        assertEquals(ptest.retrieveEntry("www.google.com"),
+                e1);
+        assertEquals(ptest.retrieveEntry("www.twitter.com"),
+                e3);
+
+        assertEquals(ptest.retrieveEntry("www.facebook.com"),
+                e2);
+        assertNull(ptest.retrieveEntry("www.4chan.org"));
     }
 }

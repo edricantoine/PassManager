@@ -2,7 +2,7 @@ package model;
 
 //This class represents an entry with a Website value and a Password value.
 public class Entry {
-    private String website;
+    private String label;
     private String username;
     private String password;
     private Boolean isImportant;
@@ -11,15 +11,15 @@ public class Entry {
     //REQUIRES: w and p both have length greater than zero
     //EFFECTS: sets this entry's website to string w, and the password to string p
     public Entry(String w, String u, String p, Boolean i) {
-        this.website = w;
+        this.label = w;
         this.username = u;
         this.password = p;
         this.isImportant = i;
     }
 
     //getters
-    public String getWebsite() {
-        return this.website;
+    public String getLabel() {
+        return this.label;
     }
 
     public String getUsername() {
@@ -63,7 +63,7 @@ public class Entry {
 
     //EFFECTS: returns string representation of an entry
     public String entryString() {
-        return "Website: " + this.website + " Username: " + this.username + " Password: " + this.password;
+        return "Website: " + this.label + " Username: " + this.username + " Password: " + this.password;
     }
 
 }
