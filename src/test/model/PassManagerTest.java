@@ -1,6 +1,7 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -27,7 +28,25 @@ class PassManagerTest {
         ptest.addEntry(e2);
         ptest.addEntry(e3);
         assertEquals(ptest.getEntries().size(), 3);
+
     }
+
+    @Test
+    public void testGetNumOfType() {
+        Entry e4 = new Entry("1", "A", "B", true, EntryType.ENTERTAINMENT);
+        Entry e5 = new Entry("2", "C", "D", false, EntryType.ENTERTAINMENT);
+        Entry e6 = new Entry("3", "E", "F", false, EntryType.FINANCE);
+        ptest.addEntry(e4);
+        ptest.addEntry(e5);
+        ptest.addEntry(e6);
+
+        assertEquals(ptest.getNumEntriesOfType(EntryType.ENTERTAINMENT), 2);
+        assertEquals(ptest.getNumImportantEntriesOfType(EntryType.ENTERTAINMENT), 1);
+        assertEquals(ptest.getNumEntriesOfType(EntryType.FINANCE), 1);
+        assertEquals(ptest.getNumImportantEntriesOfType(EntryType.FINANCE), 0);
+        assertEquals(ptest.getNumEntriesOfType(EntryType.WORK), 0);
+    }
+
     @Test
     public void testGetImportant() {
         ptest.addEntry(e1);

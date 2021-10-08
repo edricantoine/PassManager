@@ -4,7 +4,8 @@ import model.*;
 
 import java.util.Scanner;
 
-//Password manager application
+//Password manager application, handles console UI and user input
+
 public class PassManagerApp {
     private PassManager manager;
     private Scanner input;
@@ -15,7 +16,7 @@ public class PassManagerApp {
 
     private void runPassManager() {
         boolean repeat = true;
-        String initial = null;
+        String initial;
         initializeManager();
 
         while (repeat) {
@@ -213,6 +214,8 @@ public class PassManagerApp {
         boolean isSorting = askSort();
         if (isSorting) {
             sortType = chooseCategoryToSortBy();
+            System.out.println("You have " + manager.getNumEntriesOfType(sortType)
+                    + " in the category " + sortType + ".");
             for (Entry e : manager.getEntries()) {
                 if (e.getType().equals(sortType)) {
                     System.out.println(e.entryString());
@@ -232,6 +235,8 @@ public class PassManagerApp {
         boolean isSorting = askSort();
         if (isSorting) {
             sortType = chooseCategoryToSortBy();
+            System.out.println("You have " + manager.getNumImportantEntriesOfType(sortType)
+                    + " important entries in the category " + sortType + ".");
             for (Entry e : manager.getEntries()) {
                 if (e.getType().equals(sortType) && e.getImportant()) {
                     System.out.println(e.entryString());
@@ -281,18 +286,15 @@ public class PassManagerApp {
         System.out.println("y: yes");
         System.out.println("Anything else: no");
         sortChoice = input.next();
-        if (sortChoice.equals("y")) {
-            return true;
-        } else {
-            return false;
-        }
+        return sortChoice.equals("y");
 
     }
 
 
     private void welcomeMenu() {
         System.out.println("Welcome to Edric's Password Manager.");
-        System.out.println("You currently have " + manager.getNumEntries() + " password(s)  saved.");
+        System.out.println("You currently have " + manager.getNumEntries() + " password(s) saved.");
+        System.out.println("You have " + manager.getNumImportantEntries() + " important password(s) saved.");
         System.out.println("What would you like to do?");
         System.out.println("a: add an entry");
         if (manager.getNumEntries() > 0) {

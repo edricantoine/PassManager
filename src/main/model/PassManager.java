@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 //This class represents a collection of website-password pairs, with a List of entries.
+//Functionality includes searching for specific entries by label, displaying all entries as Strings,
+//returning the number of entries, etc.
 
 public class PassManager {
     private List<Entry> entries;
 
     //EFFECTS: Creates a new PassManager with blank entries list.
     public PassManager() {
-        this.entries = new ArrayList<Entry>();
+        this.entries = new ArrayList<>();
     }
 
     //getters
@@ -26,6 +28,26 @@ public class PassManager {
         int ans = 0;
         for (Entry e : entries) {
             if (e.getImportant()) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    public int getNumEntriesOfType(EntryType sortType) {
+        int ans = 0;
+        for (Entry e : entries) {
+            if (e.getType().equals(sortType)) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+
+    public int getNumImportantEntriesOfType(EntryType sortType) {
+        int ans = 0;
+        for (Entry e : entries) {
+            if (e.getImportant() && e.getType().equals(sortType)) {
                 ans++;
             }
         }

@@ -1,6 +1,7 @@
 package model;
 
-//This class represents an entry with a Website value and a Password value.
+//This class represents an entry in the password manager with a Label, a Website value and a Password value.
+//These fields can be changed, and an entry can be displayed as a String.
 public class Entry {
     private String label;
     private String username;
