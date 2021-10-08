@@ -17,9 +17,11 @@ public class PassManager {
     public List<Entry> getEntries() {
         return this.entries;
     }
+
     public int getNumEntries() {
         return this.entries.size();
     }
+
     public int getNumImportantEntries() {
         int ans = 0;
         for (Entry e : entries) {
