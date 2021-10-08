@@ -15,9 +15,9 @@ class PassManagerTest {
     public void setUp() {
 
         ptest = new PassManager();
-        e1 = new Entry("www.google.com", "Jim", "12345", false);
-        e2 = new Entry("www.facebook.com", "Bob", "abcde", false);
-        e3 = new Entry("www.twitter.com", "Tim", "password", false);
+        e1 = new Entry("www.google.com", "Jim", "12345", false, EntryType.OTHER);
+        e2 = new Entry("www.facebook.com", "Bob", "abcde", false, EntryType.OTHER);
+        e3 = new Entry("www.twitter.com", "Tim", "password", false, EntryType.OTHER);
 
     }
 
@@ -69,11 +69,11 @@ class PassManagerTest {
         ptest.addEntry(e3);
 
         assertEquals(ptest.retrieveString("www.google.com"),
-                "Website: www.google.com Username: Jim Password: 12345");
+                "Label: www.google.com Username: Jim Password: 12345");
         assertEquals(ptest.retrieveString("www.twitter.com"),
-                "Website: www.twitter.com Username: Tim Password: password");
+                "Label: www.twitter.com Username: Tim Password: password");
         assertEquals(ptest.retrieveString("www.facebook.com"),
-                "Website: www.facebook.com Username: Bob Password: abcde");
+                "Label: www.facebook.com Username: Bob Password: abcde");
         assertEquals(ptest.retrieveString("www.4chan.org"), "Website not found in list.");
         assertEquals(ptest.retrieveEntry("www.google.com"),
                 e1);

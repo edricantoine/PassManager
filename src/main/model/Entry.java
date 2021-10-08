@@ -6,15 +6,17 @@ public class Entry {
     private String username;
     private String password;
     private Boolean isImportant;
+    private EntryType type;
 
 
     //REQUIRES: w and p both have length greater than zero
     //EFFECTS: sets this entry's website to string w, and the password to string p
-    public Entry(String w, String u, String p, Boolean i) {
+    public Entry(String w, String u, String p, Boolean i, EntryType t) {
         this.label = w;
         this.username = u;
         this.password = p;
         this.isImportant = i;
+        this.type = t;
     }
 
     //getters
@@ -34,6 +36,9 @@ public class Entry {
         return this.isImportant;
     }
 
+    public EntryType getType() {
+        return this.type;
+    }
 
     //REQUIRES: newPassword has length greater than zero
     //MODIFIES: this
@@ -50,6 +55,12 @@ public class Entry {
     }
 
     //MODIFIES: this
+    //EFFECTS: sets this entry's type to e
+    public void setType(EntryType e) {
+        this.type = e;
+    }
+
+    //MODIFIES: this
     //EFFECTS: marks this entry as important
     public void makeImportant() {
         this.isImportant = true;
@@ -63,7 +74,7 @@ public class Entry {
 
     //EFFECTS: returns string representation of an entry
     public String entryString() {
-        return "Website: " + this.label + " Username: " + this.username + " Password: " + this.password;
+        return "Label: " + this.label + " Username: " + this.username + " Password: " + this.password;
     }
 
 }

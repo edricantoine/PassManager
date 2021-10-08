@@ -26,7 +26,7 @@ public class PassManagerApp {
             if (initial.equals("x")) {
                 repeat = false;
             } else {
-                doThing(initial);
+                useCommand(initial);
             }
 
         }
@@ -35,7 +35,7 @@ public class PassManagerApp {
 
     }
 
-    private void doThing(String initial) {
+    private void useCommand(String initial) {
         if (initial.equals("a")) {
             addToManager();
         } else if (manager.getNumEntries() > 0) {
@@ -71,12 +71,12 @@ public class PassManagerApp {
 
         if (userImportant.equals("y")) {
 
-            manager.addEntry(new Entry(userWeb, userName, userPass, true));
+            manager.addEntry(new Entry(userWeb, userName, userPass, true, EntryType.OTHER));
             System.out.println("Successfully added.");
 
         } else if (userImportant.equals("n")) {
 
-            manager.addEntry(new Entry(userWeb, userName, userPass, false));
+            manager.addEntry(new Entry(userWeb, userName, userPass, false, EntryType.OTHER));
             System.out.println("Successfully added.");
 
         } else {
@@ -87,7 +87,7 @@ public class PassManagerApp {
     }
 
     public void modifyRemove() {
-        String choice;
+
         Entry chosenEntry;
         String chosenWeb;
         System.out.println("Type the label of the entry you would like to modify:");
@@ -96,41 +96,104 @@ public class PassManagerApp {
         if (chosenEntry == null) {
             System.out.println("Entry not found in list.");
         } else {
-            modifyRemoveMenu();
-            choice = input.next();
-            if (choice.equals("u")) {
-                handleChangeUsername(chosenEntry);
-            } else if (choice.equals("p")) {
-                handleChangePass(chosenEntry);
-            } else if (choice.equals("i")) {
-                handleToggleImportant(chosenEntry);
-            } else if (choice.equals("r")) {
-                handleRemoval(chosenEntry);
-            } else {
-                System.out.println("Invalid input.");
-            }
+            chooseAction(chosenEntry);
         }
 
 
     }
 
+    public void chooseAction(Entry chosenEntry) {
+        String choice;
+        modifyRemoveMenu();
+        choice = input.next();
+        switch (choice) {
+            case "u":
+                handleChangeUsername(chosenEntry);
+                break;
+            case "p":
+                handleChangePass(chosenEntry);
+                break;
+            case "i":
+                handleToggleImportant(chosenEntry);
+                break;
+            case "r":
+                handleRemoval(chosenEntry);
+                break;
+            case "t":
+                handleCategory(chosenEntry);
+                break;
+            default:
+                System.out.println("Invalid input.");
+                break;
+        }
+    }
+
     private void handleChangeUsername(Entry ce) {
-        System.out.println("chage");
+        String newName;
+        System.out.println("Type the new username here: ");
+        newName = input.next();
+        ce.setUsername(newName);
+        System.out.println("Great! Username changed to " + ce.getUsername());
     }
 
     private void handleChangePass(Entry ce) {
-        System.out.println("chage apss");
+        String newPass;
+        System.out.println("Type the new password here: ");
+        newPass = input.next();
+        ce.setPassword(newPass);
+        System.out.println("Great! Password changed to " + ce.getPassword());
     }
 
     private void handleToggleImportant(Entry ce) {
-        System.out.println("impoernt");
+        if (ce.getImportant()) {
+            ce.makeUnimportant();
+            System.out.println("This entry is no longer important");
+        } else {
+            ce.makeImportant();
+            System.out.println("This entry is now important");
+        }
     }
 
     private void handleRemoval(Entry ce) {
-        System.out.println("hhh");
+        manager.removeEntry(ce);
+        System.out.println("Entry successfully removed");
+    }
+
+    private void handleCategory(Entry ce) {
+        String chosenCategory;
+        System.out.println("Select a category for this entry: ");
+        displayCategoryMenu();
+        chosenCategory = input.next();
+        if (chosenCategory.equals("w")) {
+            ce.setType(EntryType.WORK);
+            System.out.println("Category set to: Work");
+        } else if (chosenCategory.equals("f")) {
+            ce.setType(EntryType.FINANCE);
+            System.out.println("Category set to: Finance");
+        } else if (chosenCategory.equals("e")) {
+            ce.setType(EntryType.ENTERTAINMENT);
+            System.out.println("Category set to: Entertainment");
+        } else if (chosenCategory.equals("d")) {
+            ce.setType(EntryType.DEVICES);
+            System.out.println("Category set to: Devices");
+        } else if (chosenCategory.equals("o")) {
+            ce.setType(EntryType.OTHER);
+            System.out.println("Category set to: Other");
+        } else {
+            System.out.println("Invalid category.");
+        }
+    }
+
+    private void displayCategoryMenu() {
+        System.out.println("w: work");
+        System.out.println("f: finance");
+        System.out.println("e: entertainment");
+        System.out.println("d: devices");
+        System.out.println("o: other");
     }
 
     private void modifyRemoveMenu() {
+        System.out.println("t: change category");
         System.out.println("u: change username");
         System.out.println("p: change password");
         System.out.println("i: toggle importance");
@@ -146,17 +209,84 @@ public class PassManagerApp {
     }
 
     private void displayEntries() {
-        for (Entry e : manager.getEntries()) {
-            System.out.println(e.entryString());
-        }
-    }
+        EntryType sortType;
+        boolean isSorting = askSort();
+        if (isSorting) {
+            sortType = chooseCategoryToSortBy();
+            for (Entry e : manager.getEntries()) {
+                if (e.getType().equals(sortType)) {
+                    System.out.println(e.entryString());
+                }
 
-    private void displayImportantEntries() {
-        for (Entry e : manager.getEntries()) {
-            if (e.getImportant()) {
+            }
+        } else {
+            for (Entry e : manager.getEntries()) {
                 System.out.println(e.entryString());
             }
         }
+
+    }
+
+    private void displayImportantEntries() {
+        EntryType sortType;
+        boolean isSorting = askSort();
+        if (isSorting) {
+            sortType = chooseCategoryToSortBy();
+            for (Entry e : manager.getEntries()) {
+                if (e.getType().equals(sortType) && e.getImportant()) {
+                    System.out.println(e.entryString());
+                }
+
+            }
+        } else {
+            for (Entry e : manager.getEntries()) {
+                if (e.getImportant()) {
+                    System.out.println(e.entryString());
+                }
+
+            }
+        }
+
+    }
+
+    private EntryType chooseCategoryToSortBy() {
+        String categoryChoice;
+        System.out.println("Select category to sort by: ");
+        displayCategoryMenu();
+        categoryChoice = input.next();
+        return handleCategoryForSort(categoryChoice);
+    }
+
+    private EntryType handleCategoryForSort(String choice) {
+
+        if (choice.equals("w")) {
+            return EntryType.WORK;
+        } else if (choice.equals("f")) {
+            return EntryType.FINANCE;
+        } else if (choice.equals("e")) {
+            return EntryType.ENTERTAINMENT;
+        } else if (choice.equals("d")) {
+            return EntryType.DEVICES;
+        } else if (choice.equals("o")) {
+            return EntryType.OTHER;
+        } else {
+            System.out.println("Invalid category. Sorting by: OTHER.");
+            return EntryType.OTHER;
+        }
+    }
+
+    private boolean askSort() {
+        String sortChoice;
+        System.out.println("Would you like to sort by category?");
+        System.out.println("y: yes");
+        System.out.println("Anything else: no");
+        sortChoice = input.next();
+        if (sortChoice.equals("y")) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 
@@ -167,7 +297,7 @@ public class PassManagerApp {
         System.out.println("a: add an entry");
         if (manager.getNumEntries() > 0) {
             System.out.println("m: modify or remove an entry");
-            System.out.println("s: search for an entry by site");
+            System.out.println("s: search for an entry by label");
             System.out.println("d: display a list of all entries");
             if (manager.getNumImportantEntries() > 0) {
                 System.out.println("i: display a list of all important entries");

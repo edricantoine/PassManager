@@ -7,7 +7,14 @@ public class EntryTest {
 
     @BeforeEach
     public void setUp() {
-        e = new Entry("www.google.com", "Jim", "password,", false);
+        e = new Entry("www.google.com", "Jim", "password", false, EntryType.OTHER);
+    }
+
+    @Test
+    public void testGetSetType() {
+        assertEquals(e.getType(), EntryType.OTHER);
+        e.setType(EntryType.FINANCE);
+        assertEquals(e.getType(), EntryType.FINANCE);
     }
 
     @Test
@@ -27,11 +34,11 @@ public class EntryTest {
 
     @Test
     public void testEntryString() {
-        assertEquals(e.entryString(), "Website: www.google.com Username: Jim Password: password");
+        assertEquals(e.entryString(), "Label: www.google.com Username: Jim Password: password");
         e.setPassword("1234");
-        assertEquals(e.entryString(), "Website: www.google.com Username: Jim Password: 1234");
+        assertEquals(e.entryString(), "Label: www.google.com Username: Jim Password: 1234");
         e.setUsername("Steve");
-        assertEquals(e.entryString(), "Website: www.google.com Username: Steve Password: 1234");
+        assertEquals(e.entryString(), "Label: www.google.com Username: Steve Password: 1234");
     }
 
     @Test
