@@ -16,10 +16,10 @@ myself and others like me to be more organized.
 
 - As a user, I want to be able to add multiple enties consisting of a label, username,
 and password to the password manager.
-- As a user, I want to be able to modify specific entries and remove them from the list.
+- As a user, I want to be able to modify specific entries by changing their username, password, and category,
+and be able to remove them from the list.
 - As a user, I want to be able to search for a specific label name in order to receive its associated username 
 and password.
 - As a user, I want to be able to view the number of entries in the password manager and display them as a list.
 - As a user, I want to be able to mark entries as important, and have the option to display only important entries.
-- As a user, I want to be able to have my entries saved, so they can appear even after the application 
-is closed.
+- As a user, I want to be able to sort my entries by category when displaying them.
