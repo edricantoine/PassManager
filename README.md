@@ -14,7 +14,7 @@ myself and others like me to be more organized.
 
 ## User Stories
 
-- As a user, I want to be able to add multiple enties consisting of a label, username,
+- As a user, I want to be able to add multiple entries consisting of a label, username,
 and password to the password manager.
 - As a user, I want to be able to modify specific entries by changing their username, password, and category,
 and be able to remove them from the list.
