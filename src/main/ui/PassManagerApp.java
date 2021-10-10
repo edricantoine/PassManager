@@ -14,6 +14,8 @@ public class PassManagerApp {
         runPassManager();
     }
 
+    //MODIFIES: this
+    //EFFECTS: displays welcome menu, prompts user for input, handles input
     private void runPassManager() {
         boolean repeat = true;
         String initial;
@@ -36,6 +38,8 @@ public class PassManagerApp {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: chooses what to do based on user input
     private void useCommand(String initial) {
         if (initial.equals("a")) {
             addToManager();
@@ -54,6 +58,11 @@ public class PassManagerApp {
         }
     }
 
+    //REQUIRES: user types label, username, password all with length > 0, AND label does not already
+    //          exist in password manager.
+    //MODIFIES: this
+    //EFFECTS: prompts user for label, username, password, and importance, and adds entry with
+    //         matching values to password manager
     private void addToManager() {
         String userWeb;
         String userName;
@@ -87,6 +96,8 @@ public class PassManagerApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: prompts user for a label, searches for an entry with matching label, then handles user input
     public void modifyRemove() {
 
         Entry chosenEntry;
@@ -103,6 +114,8 @@ public class PassManagerApp {
 
     }
 
+    //MODIFIES: this, ce
+    //EFFECTS: handles user input in terms of modifying and removing entries
     public void chooseAction(Entry chosenEntry) {
         String choice;
         modifyRemoveMenu();
@@ -129,6 +142,9 @@ public class PassManagerApp {
         }
     }
 
+    //REQUIRES: new username has length > 0
+    //MODIFIES: this, ce
+    //EFFECTS: prompts the user for a new username, changes the chosen entry's username to the new one
     private void handleChangeUsername(Entry ce) {
         String newName;
         System.out.println("Type the new username here: ");
@@ -137,6 +153,9 @@ public class PassManagerApp {
         System.out.println("Great! Username changed to " + ce.getUsername());
     }
 
+    //REQUIRES: new password has length > 0
+    //MODIFIES: this, ce
+    //EFFECTS: prompts user for a new password, changes chosen entry's password to the new one
     private void handleChangePass(Entry ce) {
         String newPass;
         System.out.println("Type the new password here: ");
@@ -145,6 +164,8 @@ public class PassManagerApp {
         System.out.println("Great! Password changed to " + ce.getPassword());
     }
 
+    //MODIFIES: this, ce
+    //EFFECTS: if ce is important, makes unimportant, and vice versa
     private void handleToggleImportant(Entry ce) {
         if (ce.getImportant()) {
             ce.makeUnimportant();
@@ -155,11 +176,15 @@ public class PassManagerApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes chosen entry from password manager
     private void handleRemoval(Entry ce) {
         manager.removeEntry(ce);
         System.out.println("Entry successfully removed");
     }
 
+    //MODIFIES: this, ce
+    //EFFECTS: prompts user for an input, changes ce's category based on input
     private void handleCategory(Entry ce) {
         String chosenCategory;
         System.out.println("Select a category for this entry: ");
@@ -185,6 +210,7 @@ public class PassManagerApp {
         }
     }
 
+    //EFFECTS: displays a menu for categories and their corresponding inputs
     private void displayCategoryMenu() {
         System.out.println("w: work");
         System.out.println("f: finance");
@@ -193,6 +219,7 @@ public class PassManagerApp {
         System.out.println("o: other");
     }
 
+    //EFFECTS: displays a menu for how to modify or remove entries
     private void modifyRemoveMenu() {
         System.out.println("t: change category");
         System.out.println("u: change username");
@@ -202,6 +229,7 @@ public class PassManagerApp {
 
     }
 
+    //EFFECTS: searches for an entry, if found, returns its string format
     private void searchEntries() {
         String searchSite;
         System.out.println("Label name (BE EXACT WITH SPELLING): ");
@@ -209,6 +237,8 @@ public class PassManagerApp {
         System.out.println(manager.retrieveString(searchSite));
     }
 
+    //EFFECTS: displays string format for all entries in password manager, has functionality for sorting
+    //         by category
     private void displayEntries() {
         EntryType sortType;
         boolean isSorting = askSort();
@@ -230,6 +260,8 @@ public class PassManagerApp {
 
     }
 
+    //EFFECTS: displays string format for all important entries in password manager,
+    //         has functionality for sorting by category
     private void displayImportantEntries() {
         EntryType sortType;
         boolean isSorting = askSort();
@@ -254,6 +286,7 @@ public class PassManagerApp {
 
     }
 
+    //EFFECTS: prompts user for a category to sort by, returns that category
     private EntryType chooseCategoryToSortBy() {
         String categoryChoice;
         System.out.println("Select category to sort by: ");
@@ -262,6 +295,7 @@ public class PassManagerApp {
         return handleCategoryForSort(categoryChoice);
     }
 
+    //EFFECTS: chooses category to return based on user input
     private EntryType handleCategoryForSort(String choice) {
 
         if (choice.equals("w")) {
@@ -280,6 +314,7 @@ public class PassManagerApp {
         }
     }
 
+    //EFFECTS: returns true if user prompts to sort, false otherwise
     private boolean askSort() {
         String sortChoice;
         System.out.println("Would you like to sort by category?");
@@ -291,6 +326,7 @@ public class PassManagerApp {
     }
 
 
+    //EFFECTS: displays welcome menu with options and their corresponding user inputs
     private void welcomeMenu() {
         System.out.println("Welcome to Edric's Password Manager.");
         System.out.println("You currently have " + manager.getNumEntries() + " password(s) saved.");
@@ -309,6 +345,7 @@ public class PassManagerApp {
 
     }
 
+    //EFFECTS: initializes new password manager and scanner
     private void initializeManager() {
         manager = new PassManager();
         input = new Scanner(System.in);
