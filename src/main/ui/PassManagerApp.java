@@ -295,7 +295,8 @@ public class PassManagerApp {
         return handleCategoryForSort(categoryChoice);
     }
 
-    //EFFECTS: chooses category to return based on user input
+    //EFFECTS: chooses category to return based on user input. If invalid input received, defaults to sorting
+    //         by "Other".
     private EntryType handleCategoryForSort(String choice) {
 
         if (choice.equals("w")) {
