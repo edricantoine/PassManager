@@ -14,6 +14,8 @@ public class PassManagerApp {
         runPassManager();
     }
 
+    //"INITIAL" FUNCTIONS
+
     //MODIFIES: this
     //EFFECTS: displays welcome menu, prompts user for input, handles input
     private void runPassManager() {
@@ -38,6 +40,13 @@ public class PassManagerApp {
 
     }
 
+    //EFFECTS: initializes new password manager and scanner
+    private void initializeManager() {
+        manager = new PassManager();
+        input = new Scanner(System.in);
+        input.useDelimiter("\n");
+    }
+
     //MODIFIES: this
     //EFFECTS: chooses what to do based on user input
     private void useCommand(String initial) {
@@ -57,6 +66,8 @@ public class PassManagerApp {
             System.out.println("Not a valid command");
         }
     }
+
+    //ADDING TO MANAGER FUNCTIONS
 
     //REQUIRES: user types label, username, password all with length > 0, AND label does not already
     //          exist in password manager.
@@ -95,6 +106,9 @@ public class PassManagerApp {
 
         }
     }
+
+    //MODIFYING/REMOVING HANDLER FUNCTIONS
+
 
     //MODIFIES: this
     //EFFECTS: prompts user for a label, searches for an entry with matching label, then handles user input
@@ -210,24 +224,7 @@ public class PassManagerApp {
         }
     }
 
-    //EFFECTS: displays a menu for categories and their corresponding inputs
-    private void displayCategoryMenu() {
-        System.out.println("w: work");
-        System.out.println("f: finance");
-        System.out.println("e: entertainment");
-        System.out.println("d: devices");
-        System.out.println("o: other");
-    }
 
-    //EFFECTS: displays a menu for how to modify or remove entries
-    private void modifyRemoveMenu() {
-        System.out.println("t: change category");
-        System.out.println("u: change username");
-        System.out.println("p: change password");
-        System.out.println("i: toggle importance");
-        System.out.println("r: remove this entry");
-
-    }
 
     //EFFECTS: searches for an entry, if found, returns its string format
     private void searchEntries() {
@@ -236,6 +233,8 @@ public class PassManagerApp {
         searchSite = input.next();
         System.out.println(manager.retrieveString(searchSite));
     }
+
+    //ENTRY DISPLAYING FUNCTIONS
 
     //EFFECTS: displays string format for all entries in password manager, has functionality for sorting
     //         by category
@@ -286,6 +285,8 @@ public class PassManagerApp {
 
     }
 
+    //SORT HANDLING METHODS
+
     //EFFECTS: prompts user for a category to sort by, returns that category
     private EntryType chooseCategoryToSortBy() {
         String categoryChoice;
@@ -326,6 +327,7 @@ public class PassManagerApp {
 
     }
 
+    //MENU DISPLAYING FUNCTIONS
 
     //EFFECTS: displays welcome menu with options and their corresponding user inputs
     private void welcomeMenu() {
@@ -346,11 +348,25 @@ public class PassManagerApp {
 
     }
 
-    //EFFECTS: initializes new password manager and scanner
-    private void initializeManager() {
-        manager = new PassManager();
-        input = new Scanner(System.in);
-        input.useDelimiter("\n");
+    //EFFECTS: displays a menu for categories and their corresponding inputs
+    private void displayCategoryMenu() {
+        System.out.println("w: work");
+        System.out.println("f: finance");
+        System.out.println("e: entertainment");
+        System.out.println("d: devices");
+        System.out.println("o: other");
     }
+
+    //EFFECTS: displays a menu for how to modify or remove entries
+    private void modifyRemoveMenu() {
+        System.out.println("t: change category");
+        System.out.println("u: change username");
+        System.out.println("p: change password");
+        System.out.println("i: toggle importance");
+        System.out.println("r: remove this entry");
+
+    }
+
+
 
 }
