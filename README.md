@@ -23,3 +23,7 @@ and password.
 - As a user, I want to be able to view the number of entries in the password manager and display them as a list.
 - As a user, I want to be able to mark entries as important, and have the option to display only important entries.
 - As a user, I want to be able to sort my entries by category when displaying them.
+- As a user, I want to be able to save the list of my entries to a file.
+- As a user, I want to be able to load my entries from a file, and resume from where I left off when I last
+used the application.
+- As a user, when I select the quit option from my menu, I want to have the option to save the file.
