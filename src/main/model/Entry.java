@@ -1,8 +1,13 @@
 package model;
 
+import persistence.Writable;
+import org.json.JSONObject;
+
+
 //This class represents an entry in the password manager with a Label, a Website value and a Password value.
 //These fields can be changed, and an entry can be displayed as a String.
-public class Entry {
+public class Entry implements Writable {
+
     private String label;
     private String username;
     private String password;
@@ -78,4 +83,19 @@ public class Entry {
         return "Label: " + this.label + " Username: " + this.username + " Password: " + this.password;
     }
 
+    //This method references code from the JsonSerializationDemo repo.
+    //Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    //EFFECTS: returns JSONObject representation of this Entry
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("label", label);
+        json.put("username", username);
+        json.put("password", password);
+        json.put("isImportant", isImportant);
+        json.put("type", type);
+        return json;
+    }
 }

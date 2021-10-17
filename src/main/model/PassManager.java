@@ -1,5 +1,9 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -7,7 +11,7 @@ import java.util.ArrayList;
 //Functionality includes searching for specific entries by label, displaying all entries as Strings,
 //returning the number of entries, etc.
 
-public class PassManager {
+public class PassManager implements Writable {
     private List<Entry> entries;
 
     //EFFECTS: Creates a new PassManager with blank entries list.
@@ -99,4 +103,29 @@ public class PassManager {
         return null;
     }
 
+    //This method references code from the JsonSerializationDemo repo.
+    //Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    //EFFECTS: returns the JSONObject representation of this PassManager
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("entries", entriesToJson());
+        return json;
+    }
+
+    //This method references code from the JsonSerializationDemo repo.
+    //Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    //EFFECTS: returns the entries array as a JSON array
+
+    private JSONArray entriesToJson() {
+        JSONArray jarray = new JSONArray();
+
+        for (Entry e : entries) {
+            jarray.put(e.toJson());
+        }
+        return jarray;
+    }
 }
