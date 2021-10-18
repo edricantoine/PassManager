@@ -1,0 +1,23 @@
+{"entries": [
+    {
+        "password": "c",
+        "isImportant": true,
+        "label": "a",
+        "type": "OTHER",
+        "username": "b"
+    },
+    {
+        "password": "f",
+        "isImportant": false,
+        "label": "d",
+        "type": "WORK",
+        "username": "e"
+    },
+    {
+        "password": "i",
+        "isImportant": true,
+        "label": "g",
+        "type": "ENTERTAINMENT",
+        "username": "h"
+    }
+]}
