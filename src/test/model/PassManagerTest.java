@@ -2,6 +2,8 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import exceptions.DuplicateLabelException;
+import exceptions.InvalidLengthException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -16,29 +18,80 @@ class PassManagerTest {
     public void setUp() {
 
         ptest = new PassManager();
-        e1 = new Entry("www.google.com", "Jim", "12345", false, EntryType.OTHER);
-        e2 = new Entry("www.facebook.com", "Bob", "abcde", false, EntryType.OTHER);
-        e3 = new Entry("www.twitter.com", "Tim", "password", false, EntryType.OTHER);
+        try {
+            e1 = new Entry("www.google.com", "Jim", "12345", false, EntryType.OTHER);
+        } catch (InvalidLengthException e) {
+            System.out.println("Error occurred...");
+        }
+        try {
+            e2 = new Entry("www.facebook.com", "Bob", "abcde", false, EntryType.OTHER);
+        } catch (InvalidLengthException e) {
+            e.printStackTrace();
+        }
+        try {
+            e3 = new Entry("www.twitter.com", "Tim", "password", false, EntryType.OTHER);
+        } catch (InvalidLengthException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Test
     public void testGetter() {
-        ptest.addEntry(e1);
-        ptest.addEntry(e2);
-        ptest.addEntry(e3);
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+
+        }
+        try {
+            ptest.addEntry(e2);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e3);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
         assertEquals(ptest.getEntries().size(), 3);
 
     }
 
     @Test
     public void testGetNumOfType() {
-        Entry e4 = new Entry("1", "A", "B", true, EntryType.ENTERTAINMENT);
-        Entry e5 = new Entry("2", "C", "D", false, EntryType.ENTERTAINMENT);
-        Entry e6 = new Entry("3", "E", "F", false, EntryType.FINANCE);
-        ptest.addEntry(e4);
-        ptest.addEntry(e5);
-        ptest.addEntry(e6);
+        Entry e4 = null;
+        try {
+            e4 = new Entry("1", "A", "B", true, EntryType.ENTERTAINMENT);
+        } catch (InvalidLengthException e) {
+            e.printStackTrace();
+        }
+        Entry e5 = null;
+        try {
+            e5 = new Entry("2", "C", "D", false, EntryType.ENTERTAINMENT);
+        } catch (InvalidLengthException e) {
+            e.printStackTrace();
+        }
+        Entry e6 = null;
+        try {
+            e6 = new Entry("3", "E", "F", false, EntryType.FINANCE);
+        } catch (InvalidLengthException e) {
+            e.printStackTrace();
+        }
+        try {
+            ptest.addEntry(e4);
+        } catch (DuplicateLabelException e) {
+
+        }
+        try {
+            ptest.addEntry(e5);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e6);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
 
         assertEquals(ptest.getNumEntriesOfType(EntryType.ENTERTAINMENT), 2);
         assertEquals(ptest.getNumImportantEntriesOfType(EntryType.ENTERTAINMENT), 1);
@@ -49,9 +102,21 @@ class PassManagerTest {
 
     @Test
     public void testGetImportant() {
-        ptest.addEntry(e1);
-        ptest.addEntry(e2);
-        ptest.addEntry(e3);
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+
+        }
+        try {
+            ptest.addEntry(e2);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e3);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
         e1.makeImportant();
         assertEquals(ptest.getNumImportantEntries(), 1);
     }
@@ -59,9 +124,21 @@ class PassManagerTest {
     @Test
     public void testAddContains() {
         assertEquals(ptest.getNumEntries(), 0);
-        ptest.addEntry(e1);
-        ptest.addEntry(e2);
-        ptest.addEntry(e3);
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+
+        }
+        try {
+            ptest.addEntry(e2);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e3);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
         assertEquals(ptest.getNumEntries(), 3);
         assertTrue(ptest.pmContains(e1));
         assertTrue(ptest.pmContains(e2));
@@ -71,8 +148,17 @@ class PassManagerTest {
     @Test
     public void testRemove() {
         assertFalse(ptest.removeEntry(e1));
-        ptest.addEntry(e1);
-        ptest.addEntry(e2);
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+
+        }
+        try {
+            ptest.addEntry(e2);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+
         assertEquals(ptest.getNumEntries(), 2);
         assertFalse(ptest.removeEntry(e3));
         assertTrue(ptest.removeEntry(e2));
@@ -83,9 +169,21 @@ class PassManagerTest {
 
     @Test
     public void testRetrieve() {
-        ptest.addEntry(e1);
-        ptest.addEntry(e2);
-        ptest.addEntry(e3);
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+
+        }
+        try {
+            ptest.addEntry(e2);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e3);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
 
         assertEquals(ptest.retrieveString("www.google.com"),
                 "Label: www.google.com Username: Jim Password: 12345");

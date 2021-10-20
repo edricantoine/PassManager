@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.DuplicateLabelException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -63,10 +64,15 @@ public class PassManager implements Writable {
         return this.entries.contains(e);
     }
 
-    //REQUIRES: there are no other entries with the same website as e in entries
+
     //MODIFIES: this
     //EFFECTS: adds e to entries
-    public void addEntry(Entry e) {
+    public void addEntry(Entry e) throws DuplicateLabelException {
+        for (Entry h : entries) {
+            if (h.getLabel().equals(e.getLabel())) {
+                throw new DuplicateLabelException();
+            }
+        }
         this.entries.add(e);
     }
 

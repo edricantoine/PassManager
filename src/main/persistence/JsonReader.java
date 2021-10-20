@@ -1,5 +1,7 @@
 package persistence;
 
+import exceptions.DuplicateLabelException;
+import exceptions.InvalidLengthException;
 import model.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -67,8 +69,18 @@ public class JsonReader {
         Boolean isImportant = o.getBoolean("isImportant");
         EntryType type = EntryType.valueOf(o.getString("type"));
 
-        Entry entry = new Entry(label, username, password, isImportant, type);
-        pm.addEntry(entry);
+        Entry entry = null;
+        try {
+            entry = new Entry(label, username, password, isImportant, type);
+        } catch (InvalidLengthException e) {
+            System.out.println("An error occurred...");
+        }
+        try {
+            pm.addEntry(entry);
+        } catch (DuplicateLabelException e) {
+            System.out.println("An error occurred...");
+        }
+
 
     }
 }

@@ -1,5 +1,7 @@
 package ui;
 
+import exceptions.DuplicateLabelException;
+import exceptions.InvalidLengthException;
 import model.*;
 
 import java.util.Scanner;
@@ -90,21 +92,43 @@ public class PassManagerApp {
         System.out.println("n : no");
         userImportant = input.next();
 
+        addToManagerPart2(userWeb, userName,userPass, userImportant);
+
+    }
+
+    private void addToManagerPart2(String userWeb, String userName, String userPass, String userImportant) {
         if (userImportant.equals("y")) {
 
-            manager.addEntry(new Entry(userWeb, userName, userPass, true, EntryType.OTHER));
-            System.out.println("Successfully added.");
+
+            try {
+                Entry entryToAdd = new Entry(userWeb, userName, userPass, true, EntryType.OTHER);
+                manager.addEntry(entryToAdd);
+                System.out.println("Successfully added.");
+            } catch (DuplicateLabelException e) {
+                System.out.println("An entry with that label already exists.");
+            } catch (InvalidLengthException e) {
+                System.out.println("That entry had one or more invalid labels.");
+            }
+
 
         } else if (userImportant.equals("n")) {
 
-            manager.addEntry(new Entry(userWeb, userName, userPass, false, EntryType.OTHER));
-            System.out.println("Successfully added.");
+            try {
+                Entry entryToAdd = new Entry(userWeb, userName, userPass, false, EntryType.OTHER);
+                manager.addEntry(entryToAdd);
+                System.out.println("Successfully added.");
+            } catch (DuplicateLabelException e) {
+                System.out.println("An entry with that label already exists.");
+            } catch (InvalidLengthException e) {
+                System.out.println("That entry had one or more invalid labels.");
+            }
 
         } else {
 
             System.out.println("Invalid input.");
 
         }
+
     }
 
     //MODIFYING/REMOVING HANDLER FUNCTIONS
@@ -163,7 +187,11 @@ public class PassManagerApp {
         String newName;
         System.out.println("Type the new username here: ");
         newName = input.next();
-        ce.setUsername(newName);
+        try {
+            ce.setUsername(newName);
+        } catch (InvalidLengthException e) {
+            System.out.println("That username has an invalid length.");
+        }
         System.out.println("Great! Username changed to " + ce.getUsername());
     }
 
@@ -174,7 +202,11 @@ public class PassManagerApp {
         String newPass;
         System.out.println("Type the new password here: ");
         newPass = input.next();
-        ce.setPassword(newPass);
+        try {
+            ce.setPassword(newPass);
+        } catch (InvalidLengthException e) {
+            System.out.println("This password has an invalid length.");
+        }
         System.out.println("Great! Password changed to " + ce.getPassword());
     }
 

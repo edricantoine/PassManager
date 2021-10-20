@@ -1,4 +1,6 @@
 package persistence;
+import exceptions.DuplicateLabelException;
+import exceptions.InvalidLengthException;
 import model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,9 +51,31 @@ public class JsonWriterTest extends JsonTest {
         try {
             PassManager pm = new PassManager();
             JsonWriter wt = new JsonWriter("./data/WriterNormal.json");
-            pm.addEntry(new Entry("a", "b", "c", true, EntryType.OTHER));
-            pm.addEntry(new Entry("d", "e", "f", false, EntryType.WORK));
-            pm.addEntry(new Entry("g", "h", "i", true, EntryType.ENTERTAINMENT));
+            try {
+                Entry eToAdd = new Entry("a", "b", "c", true, EntryType.OTHER);
+                pm.addEntry(eToAdd);
+            } catch (DuplicateLabelException e) {
+                fail("Error occurred");
+            } catch (InvalidLengthException e) {
+                fail("Error occurred.");
+            }
+
+            try {
+                Entry eToAdd = new Entry("d", "e", "f", false, EntryType.WORK);
+                pm.addEntry(eToAdd);
+            } catch (DuplicateLabelException e) {
+                fail("Error occurred");
+            } catch (InvalidLengthException e) {
+                fail("Error occurred.");
+            }
+            try {
+                Entry eToAdd =  new Entry("g", "h", "i", true, EntryType.ENTERTAINMENT);
+                pm.addEntry(eToAdd);
+            } catch (DuplicateLabelException e) {
+                fail("Error occurred");
+            } catch (InvalidLengthException e) {
+                fail("Error occurred.");
+            }
             wt.openFile();
             wt.write(pm);
             wt.close();

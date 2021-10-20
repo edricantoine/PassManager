@@ -1,5 +1,6 @@
 package model;
 
+import exceptions.InvalidLengthException;
 import persistence.Writable;
 import org.json.JSONObject;
 
@@ -15,9 +16,18 @@ public class Entry implements Writable {
     private EntryType type;
 
 
-    //REQUIRES: w and p both have length greater than zero
+
     //EFFECTS: sets this entry's website to string w, and the password to string p
-    public Entry(String w, String u, String p, Boolean i, EntryType t) {
+    public Entry(String w, String u, String p, Boolean i, EntryType t) throws InvalidLengthException {
+        if (w.length() <= 0) {
+            throw new InvalidLengthException();
+        }
+        if (u.length() <= 0) {
+            throw new InvalidLengthException();
+        }
+        if (p.length() <= 0) {
+            throw new InvalidLengthException();
+        }
         this.label = w;
         this.username = u;
         this.password = p;
@@ -46,18 +56,26 @@ public class Entry implements Writable {
         return this.type;
     }
 
-    //REQUIRES: newPassword has length greater than zero
     //MODIFIES: this
     //EFFECTS: sets this entry's password to newPass
-    public void setPassword(String newPassword) {
-        this.password = newPassword;
+    public void setPassword(String newPassword) throws InvalidLengthException {
+        if (newPassword.length() <= 0) {
+            throw new InvalidLengthException();
+        } else {
+            this.password = newPassword;
+        }
+
     }
 
-    //REQUIRES: newName has length greater than zero
+
     //MODIFIES: this
     //EFFECTS: sets this entry's username to newName
-    public void setUsername(String newName) {
-        this.username = newName;
+    public void setUsername(String newName) throws InvalidLengthException {
+        if (newName.length() <= 0) {
+            throw new InvalidLengthException();
+        } else {
+            this.username = newName;
+        }
     }
 
     //MODIFIES: this
