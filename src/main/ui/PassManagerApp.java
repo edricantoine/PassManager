@@ -71,11 +71,8 @@ public class PassManagerApp {
 
     //ADDING TO MANAGER FUNCTIONS
 
-    //REQUIRES: user types label, username, password all with length > 0, AND label does not already
-    //          exist in password manager.
     //MODIFIES: this
-    //EFFECTS: prompts user for label, username, password, and importance, and adds entry with
-    //         matching values to password manager
+    //EFFECTS: prompts user for label, username, password, and importance
     private void addToManager() {
         String userWeb;
         String userName;
@@ -96,6 +93,9 @@ public class PassManagerApp {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: Continuation of the previous function. Adds entry with
+    //         matching values to password manager
     private void addToManagerPart2(String userWeb, String userName, String userPass, String userImportant) {
         if (userImportant.equals("y")) {
 
@@ -180,7 +180,7 @@ public class PassManagerApp {
         }
     }
 
-    //REQUIRES: new username has length > 0
+
     //MODIFIES: this, ce
     //EFFECTS: prompts the user for a new username, changes the chosen entry's username to the new one
     private void handleChangeUsername(Entry ce) {
@@ -195,7 +195,7 @@ public class PassManagerApp {
         System.out.println("Great! Username changed to " + ce.getUsername());
     }
 
-    //REQUIRES: new password has length > 0
+
     //MODIFIES: this, ce
     //EFFECTS: prompts user for a new password, changes chosen entry's password to the new one
     private void handleChangePass(Entry ce) {
