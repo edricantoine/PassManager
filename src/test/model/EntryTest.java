@@ -1,9 +1,9 @@
 package model;
 import exceptions.InvalidLengthException;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.security.InvalidAlgorithmParameterException;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class EntryTest {
@@ -94,6 +94,16 @@ public class EntryTest {
         assertTrue(e.getImportant());
         e.makeUnimportant();
         assertFalse(e.getImportant());
+    }
+
+    @Test
+    public void testToJson() {
+        JSONObject temp = e.toJson();
+        assertEquals(temp.get("label"), e.getLabel());
+        assertEquals(temp.get("username"), e.getUsername());
+        assertEquals(temp.get("password"), e.getPassword());
+        assertEquals(temp.get("isImportant"), e.getImportant());
+        assertEquals(temp.get("type"), e.getType());
     }
 
 }

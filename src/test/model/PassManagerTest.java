@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import exceptions.DuplicateLabelException;
 import exceptions.InvalidLengthException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -41,7 +43,7 @@ class PassManagerTest {
         try {
             ptest.addEntry(e1);
         } catch (DuplicateLabelException e) {
-
+            fail("No exception expected...");
         }
         try {
             ptest.addEntry(e2);
@@ -80,7 +82,7 @@ class PassManagerTest {
         try {
             ptest.addEntry(e4);
         } catch (DuplicateLabelException e) {
-
+            fail("No exception expected...");
         }
         try {
             ptest.addEntry(e5);
@@ -105,7 +107,7 @@ class PassManagerTest {
         try {
             ptest.addEntry(e1);
         } catch (DuplicateLabelException e) {
-
+            fail("No exception expected...");
         }
         try {
             ptest.addEntry(e2);
@@ -127,7 +129,7 @@ class PassManagerTest {
         try {
             ptest.addEntry(e1);
         } catch (DuplicateLabelException e) {
-
+            fail("No exception expected...");
         }
         try {
             ptest.addEntry(e2);
@@ -151,7 +153,7 @@ class PassManagerTest {
         try {
             ptest.addEntry(e1);
         } catch (DuplicateLabelException e) {
-
+            fail("No exception expected...");
         }
         try {
             ptest.addEntry(e2);
@@ -172,7 +174,7 @@ class PassManagerTest {
         try {
             ptest.addEntry(e1);
         } catch (DuplicateLabelException e) {
-
+            fail("No exception expected...");
         }
         try {
             ptest.addEntry(e2);
@@ -201,4 +203,5 @@ class PassManagerTest {
                 e2);
         assertNull(ptest.retrieveEntry("www.4chan.org"));
     }
+
 }
