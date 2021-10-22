@@ -148,6 +148,22 @@ class PassManagerTest {
     }
 
     @Test
+    public void testAddException() {
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+
+        try {
+            ptest.addEntry(e1);
+            fail("Exception expected");
+        } catch (DuplicateLabelException e) {
+            System.out.println("Correct exception thrown!");
+        }
+    }
+
+    @Test
     public void testRemove() {
         assertFalse(ptest.removeEntry(e1));
         try {
@@ -203,5 +219,36 @@ class PassManagerTest {
                 e2);
         assertNull(ptest.retrieveEntry("www.4chan.org"));
     }
+
+    @Test
+    public void testToJson() {
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e2);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+        try {
+            ptest.addEntry(e3);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+
+        JSONObject temp = ptest.toJson();
+        JSONArray array = temp.getJSONArray("entries");
+        JSONArray array2 = new JSONArray();
+
+        for (Entry e : ptest.getEntries()) {
+            array2.put(e.toJson());
+        }
+        String s1 = array.toString();
+        String s2 = array2.toString();
+        assertEquals(s1, s2);
+    }
+
 
 }

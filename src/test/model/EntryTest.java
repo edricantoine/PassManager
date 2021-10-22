@@ -19,6 +19,28 @@ public class EntryTest {
     }
 
     @Test
+    public void testConstructorExceptions() {
+        try {
+            e = new Entry("", "Jim", "password", false, EntryType.OTHER);
+            fail("Exception expected.");
+        } catch (InvalidLengthException e) {
+            System.out.println("Success!");
+        }
+        try {
+            e = new Entry("aaa", "", "password", false, EntryType.OTHER);
+            fail("Exception expected.");
+        } catch (InvalidLengthException e) {
+            System.out.println("Success!");
+        }
+        try {
+            e = new Entry("aaa", "Jim", "", false, EntryType.OTHER);
+            fail("Exception expected.");
+        } catch (InvalidLengthException e) {
+            System.out.println("Success!");
+        }
+    }
+
+    @Test
     public void testGetSetType() {
         assertEquals(e.getType(), EntryType.OTHER);
         e.setType(EntryType.FINANCE);

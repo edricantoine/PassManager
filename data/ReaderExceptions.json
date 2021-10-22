@@ -1,0 +1,33 @@
+{
+  "entries": [
+    {
+      "label": "",
+      "username": "B",
+      "password": "C",
+      "isImportant": true,
+      "type": "FINANCE"
+    },
+    {
+      "label": "D",
+      "username": "",
+      "password": "F",
+      "isImportant": false,
+      "type": "ENTERTAINMENT"
+
+    },
+    {
+      "label": "G",
+      "username": "H",
+      "password": "",
+      "isImportant": false,
+      "type": "WORK"
+    },
+    {
+      "label": "",
+      "username": "K",
+      "password": "L",
+      "isImportant": true,
+      "type": "DEVICES"
+    }
+  ]
+}
