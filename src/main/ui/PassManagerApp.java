@@ -3,14 +3,21 @@ package ui;
 import exceptions.DuplicateLabelException;
 import exceptions.InvalidLengthException;
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 //Password manager application, handles console UI and user input
 
 public class PassManagerApp {
+    private static final String JSON_LOC = "./data/pmanager.json";
     private PassManager manager;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public PassManagerApp() {
         runPassManager();
@@ -32,6 +39,7 @@ public class PassManagerApp {
 
             if (initial.equals("x")) {
                 repeat = false;
+                askAboutSaving();
             } else {
                 useCommand(initial);
             }
@@ -44,7 +52,10 @@ public class PassManagerApp {
 
     //EFFECTS: initializes new password manager and scanner
     private void initializeManager() {
+        jsonWriter = new JsonWriter(JSON_LOC);
+        jsonReader = new JsonReader(JSON_LOC);
         manager = new PassManager();
+        loadPassManager();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -54,6 +65,8 @@ public class PassManagerApp {
     private void useCommand(String initial) {
         if (initial.equals("a")) {
             addToManager();
+        } else if (initial.equals("v")) {
+            askAboutSaving();
         } else if (manager.getNumEntries() > 0) {
             if (initial.equals("m")) {
                 modifyRemove();
@@ -376,6 +389,7 @@ public class PassManagerApp {
                 System.out.println("i: display a list of all important entries");
             }
         }
+        System.out.println("v: save current entries");
         System.out.println("x: exit");
 
     }
@@ -397,6 +411,57 @@ public class PassManagerApp {
         System.out.println("i: toggle importance");
         System.out.println("r: remove this entry");
 
+    }
+
+    //DATA PERSISTENCE METHODS
+
+    //This method references code from the JsonSerializationDemo repo.
+    //Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    //EFFECTS: Saves data to file
+    private void savePassManager() {
+        try {
+            jsonWriter.openFile();
+            jsonWriter.write(manager);
+            jsonWriter.close();
+            System.out.println("Successfully saved data to " + JSON_LOC);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error writing to " + JSON_LOC);
+        }
+    }
+
+    //This method references code from the JsonSerializationDemo repo.
+    //Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+    //MODIFIES: this
+    //EFFECTS: Reads data from file
+    private void loadPassManager() {
+        try {
+            manager = jsonReader.read();
+            System.out.println("Successfully loaded data from" + JSON_LOC);
+        } catch (IOException e) {
+            System.out.println("Error reading from " + JSON_LOC
+                    + ". Ignore message if this is first usage of application.");
+        }
+    }
+
+    private void askAboutSaving() {
+        String saveChoice;
+        System.out.println("Would you like to save data?");
+        System.out.println("y: yes");
+        System.out.println("n: no");
+        saveChoice = input.next();
+        handleSaveChoice(saveChoice);
+    }
+
+    private void handleSaveChoice(String saveChoice) {
+        if (saveChoice.equals("y")) {
+            savePassManager();
+        } else if (saveChoice.equals("n")) {
+            System.out.println("OK.");
+        } else {
+            System.out.println("Not a valid input.");
+        }
     }
 
 

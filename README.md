@@ -26,4 +26,3 @@ and password.
 - As a user, I want to be able to save the list of my entries to a file.
 - As a user, I want to be able to load my entries from a file, and resume from where I left off when I last
 used the application.
-- As a user, when I select the quit option from my menu, I want to have the option to save the file.
