@@ -221,6 +221,19 @@ class PassManagerTest {
     }
 
     @Test
+    public void testRetrieveFromStringValue() {
+        try {
+            ptest.addEntry(e1);
+        } catch (DuplicateLabelException e) {
+            fail("No exception expected...");
+        }
+
+        assertEquals(ptest.retrieveEntryFromStringValue("Label: www.google.com Username: Jim Password: 12345"),
+                e1);
+
+    }
+
+    @Test
     public void testToJson() {
         try {
             ptest.addEntry(e1);

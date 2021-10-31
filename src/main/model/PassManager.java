@@ -88,7 +88,7 @@ public class PassManager implements Writable {
         }
     }
 
-    //EFFECTS: if an entry exists with website same as key, that entry's string format is returned.
+    //EFFECTS: if an entry exists with label same as key, that entry's string format is returned.
     public String retrieveString(String key) {
         for (Entry e : this.entries) {
             if (e.getLabel().equals(key)) {
@@ -99,6 +99,7 @@ public class PassManager implements Writable {
         return "Website not found in list.";
     }
 
+    //EFFECTS: if an entry exists with label same as key, that entry is returned.
     public Entry retrieveEntry(String key) {
         for (Entry e : this.entries) {
             if (e.getLabel().equals(key)) {
@@ -106,6 +107,16 @@ public class PassManager implements Writable {
             }
         }
 
+        return null;
+    }
+
+    //EFFECTS: if entry exists with entryString() value same as s, that entry is returned.
+    public Entry retrieveEntryFromStringValue(String s) {
+        for (Entry e : this.entries) {
+            if (e.entryString().equals(s)) {
+                return e;
+            }
+        }
         return null;
     }
 
