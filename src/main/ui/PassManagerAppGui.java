@@ -353,6 +353,10 @@ public class PassManagerAppGui implements ListSelectionListener {
         public void actionPerformed(ActionEvent e) {
             loadPassManager();
             pmToList();
+            int size = listModel.getSize();
+            if (size != 0) {
+                loadButton.setEnabled(false);
+            }
         }
     }
 
