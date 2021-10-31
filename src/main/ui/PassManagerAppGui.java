@@ -91,7 +91,7 @@ public class PassManagerAppGui implements ListSelectionListener {
         saveButton.addActionListener(new SaveListener());
         saveButton.setActionCommand("Save");
         welcomeLabel = new JLabel("Welcome! You currently have " + manager.getNumEntries()
-                + " entry/entries.");
+                + " entry/entries of which " + manager.getNumImportantEntries() + " are important.");
         sortImportant = new JComboBox<>(new String[]{"All entries", "Important only"});
         sortImportant.addActionListener(new SortListener());
         sortCategory = new JComboBox<>(new String[]{"All entries", "WORK", "ENTERTAINMENT", "FINANCE",
@@ -208,6 +208,11 @@ public class PassManagerAppGui implements ListSelectionListener {
         frame.setVisible(true);
     }
 
+    private void displayWelcomeLabel() {
+        welcomeLabel.setText("Welcome! You currently have " + manager.getNumEntries()
+                + " entry/entries of which " + manager.getNumImportantEntries() + " are important.");
+    }
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
@@ -251,7 +256,7 @@ public class PassManagerAppGui implements ListSelectionListener {
 
                 manager.addEntry(newE);
                 listModel.insertElementAt(newE.entryString(), index);
-                welcomeLabel.setText("Welcome! You currently have " + manager.getNumEntries() + " entry/entries.");
+                displayWelcomeLabel();
                 frame.pack();
                 entryList.setSelectedIndex(index);
                 entryList.ensureIndexIsVisible(index);
@@ -295,8 +300,7 @@ public class PassManagerAppGui implements ListSelectionListener {
             manager.removeEntry(theEntry);
             int index = entryList.getSelectedIndex();
             listModel.remove(index);
-            welcomeLabel.setText("Welcome! You currently have " + manager.getNumEntries()
-                    + " entry/entries.");
+            displayWelcomeLabel();
             frame.pack();
 
 
