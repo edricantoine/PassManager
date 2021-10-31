@@ -35,6 +35,8 @@ public class PassManagerAppGui implements ListSelectionListener {
     private JButton addEntryButton;
     private JButton removeEntryButton;
     private JButton saveButton;
+    private JButton loadButton;
+    private JButton goToSearchButton;
 
     private JCheckBox importantBox;
 
@@ -73,8 +75,6 @@ public class PassManagerAppGui implements ListSelectionListener {
         entryList.addListSelectionListener(this);
         entryList.setVisibleRowCount(5);
         listScrollPane = new JScrollPane(entryList);
-        loadPassManager();
-        pmToList();
         setUpButtonsAndFields();
         setUpMiscItems();
         setUpPane();
@@ -90,6 +90,12 @@ public class PassManagerAppGui implements ListSelectionListener {
         saveButton = new JButton("Save");
         saveButton.addActionListener(new SaveListener());
         saveButton.setActionCommand("Save");
+        loadButton = new JButton("Load");
+        loadButton.addActionListener(new LoadListener());
+        loadButton.setActionCommand("Load");
+        goToSearchButton = new JButton("Search for an entry");
+        goToSearchButton.setActionCommand("Search for an entry");
+        goToSearchButton.addActionListener(new GoSearchListener());
         welcomeLabel = new JLabel("Welcome! You currently have " + manager.getNumEntries()
                 + " entry/entries of which " + manager.getNumImportantEntries() + " are important.");
         sortImportant = new JComboBox<>(new String[]{"All entries", "Important only"});
@@ -143,7 +149,9 @@ public class PassManagerAppGui implements ListSelectionListener {
         mainPane.add(new JSeparator(SwingConstants.VERTICAL));
         mainPane.add(Box.createHorizontalStrut(3));
         mainPane.add(removeEntryButton);
+        mainPane.add(goToSearchButton);
         mainPane.add(saveButton);
+        mainPane.add(loadButton);
         mainPane.setOpaque(true);
         mainPanel.add(listScrollPane, BorderLayout.CENTER);
         mainPanel.add(mainPane, BorderLayout.PAGE_END);
@@ -339,14 +347,30 @@ public class PassManagerAppGui implements ListSelectionListener {
         }
     }
 
+    public class LoadListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            loadPassManager();
+            pmToList();
+        }
+    }
+
+    public class GoSearchListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            SearchTool searcher = new SearchTool(manager);
+        }
+    }
+
     public class SortListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             String sortingByImportance = (String)sortImportant.getSelectedItem();
             String categoryToSortBy = (String)sortCategory.getSelectedItem();
-            System.out.println(sortingByImportance);
-            System.out.println(categoryToSortBy);
+
             EntryType chosenType = chooseType(categoryToSortBy);
 
             handleSort(sortingByImportance, categoryToSortBy, chosenType);
