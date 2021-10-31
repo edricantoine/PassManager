@@ -25,25 +25,37 @@ import java.io.IOException;
 
 
 public class PassManagerAppGui implements ListSelectionListener {
-    private JFrame frame;
     private static final String JSON_LOC = "./data/pmanager.json";
     private PassManager manager;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+
+    private JFrame frame;
+
     private JButton addEntryButton;
     private JButton removeEntryButton;
     private JButton saveButton;
+
     private JCheckBox importantBox;
+
     private JTextField labelField;
     private JTextField usernameField;
     private JTextField passwordField;
+
     private JList<String> entryList;
     private DefaultListModel listModel;
+
     private JScrollPane listScrollPane;
     private JPanel mainPanel;
     private AddListener addListener;
+    private SortListener sortListener;
+
     private JComboBox<String> categorySelection;
+    private JComboBox<String> sortImportant;
+    private JComboBox<String> sortCategory;
+
     private String[] catStrings;
+
     private JLabel welcomeLabel;
 
 
@@ -80,6 +92,11 @@ public class PassManagerAppGui implements ListSelectionListener {
         saveButton.setActionCommand("Save");
         welcomeLabel = new JLabel("Welcome! You currently have " + manager.getNumEntries()
                 + " entry/entries.");
+        sortImportant = new JComboBox<>(new String[]{"All entries", "Important only"});
+        sortImportant.addActionListener(new SortListener());
+        sortCategory = new JComboBox<>(new String[]{"All entries", "WORK", "ENTERTAINMENT", "FINANCE",
+                "DEVICES", "OTHER"});
+        sortCategory.addActionListener(new SortListener());
 
 
     }
@@ -114,6 +131,8 @@ public class PassManagerAppGui implements ListSelectionListener {
         JPanel mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
         mainPane.add(welcomeLabel);
+        mainPane.add(sortImportant);
+        mainPane.add(sortCategory);
         mainPane.add(labelField);
         mainPane.add(usernameField);
         mainPane.add(passwordField);
@@ -151,6 +170,30 @@ public class PassManagerAppGui implements ListSelectionListener {
     private void pmToList() {
         for (Entry e : manager.getEntries()) {
             listModel.insertElementAt(e.entryString(), 0);
+        }
+    }
+
+    private void pmToImportantList() {
+        for (Entry e : manager.getEntries()) {
+            if (e.getImportant()) {
+                listModel.insertElementAt(e.entryString(), 0);
+            }
+        }
+    }
+
+    private void pmToListOfType(EntryType e) {
+        for (Entry h : manager.getEntries()) {
+            if (h.getType().equals(e)) {
+                listModel.insertElementAt(h.entryString(), 0);
+            }
+        }
+    }
+
+    private void pmToImportantListOfType(EntryType e) {
+        for (Entry h : manager.getEntries()) {
+            if (h.getImportant() && h.getType().equals(e)) {
+                listModel.insertElementAt(h.entryString(), 0);
+            }
         }
     }
 
@@ -289,6 +332,52 @@ public class PassManagerAppGui implements ListSelectionListener {
                 Toolkit.getDefaultToolkit().beep();
             }
 
+        }
+    }
+
+    public class SortListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String sortingByImportance = (String)sortImportant.getSelectedItem();
+            String categoryToSortBy = (String)sortCategory.getSelectedItem();
+            System.out.println(sortingByImportance);
+            System.out.println(categoryToSortBy);
+            EntryType chosenType = chooseType(categoryToSortBy);
+
+            handleSort(sortingByImportance, categoryToSortBy, chosenType);
+        }
+
+        public EntryType chooseType(String categoryToSortBy) {
+            if (!categoryToSortBy.equals("All entries")) {
+                return EntryType.valueOf(categoryToSortBy);
+            } else {
+                return EntryType.OTHER;
+            }
+        }
+
+        public void handleSort(String sortingByImportance, String categoryToSortBy, EntryType chosenType) {
+            if (sortingByImportance.equals("Important only")) {
+                if (!categoryToSortBy.equals("All entries")) {
+                    listModel.clear();
+                    pmToImportantListOfType(chosenType);
+                    addEntryButton.setEnabled(false);
+                } else {
+                    listModel.clear();
+                    pmToImportantList();
+                    addEntryButton.setEnabled(false);
+                }
+            } else {
+                if (!categoryToSortBy.equals("All entries")) {
+                    listModel.clear();
+                    pmToListOfType(chosenType);
+                    addEntryButton.setEnabled(false);
+                } else {
+                    listModel.clear();
+                    pmToList();
+                    addEntryButton.setEnabled(true);
+                }
+            }
         }
     }
 
