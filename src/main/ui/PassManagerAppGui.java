@@ -42,9 +42,6 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     private JCheckBox importantBox;
 
-    private JTextField labelField;
-    private JTextField usernameField;
-    private JTextField passwordField;
 
     private JList<String> entryList;
     private DefaultListModel listModel;
@@ -66,18 +63,25 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     public PassManagerAppGui() {
         pp = this;
+
         jsonWriter = new JsonWriter(JSON_LOC);
         jsonReader = new JsonReader(JSON_LOC);
+
         catStrings = new String[]{"WORK", "ENTERTAINMENT", "FINANCE", "DEVICES", "OTHER"};
+
         mainPanel = new JPanel();
+
         manager = new PassManager();
+
         listModel = new DefaultListModel();
         entryList = new JList<>(listModel);
         entryList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         entryList.setSelectedIndex(0);
         entryList.addListSelectionListener(this);
         entryList.setVisibleRowCount(5);
+
         listScrollPane = new JScrollPane(entryList);
+
         setUpButtonsAndFields();
         setUpMiscItems();
         setUpPane();
@@ -89,23 +93,32 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     public void setUpMiscItems() {
         importantBox = new JCheckBox("Make entry important");
+
         categorySelection = new JComboBox<>(catStrings);
+
         saveButton = new JButton("Save");
         saveButton.addActionListener(new SaveListener());
         saveButton.setActionCommand("Save");
+
         loadButton = new JButton("Load");
         loadButton.addActionListener(new LoadListener());
         loadButton.setActionCommand("Load");
+
         goToSearchButton = new JButton("Search for an entry");
         goToSearchButton.setActionCommand("Search for an entry");
         goToSearchButton.addActionListener(new GoSearchListener());
+
         gotoModButton = new JButton("Modify entry");
         gotoModButton.setActionCommand("Modify entry");
         gotoModButton.addActionListener(new GoModListener());
+        gotoModButton.setEnabled(false);
+
         welcomeLabel = new JLabel("Welcome! You currently have " + manager.getNumEntries()
                 + " entry/entries of which " + manager.getNumImportantEntries() + " are important.");
+
         sortImportant = new JComboBox<>(new String[]{"All entries", "Important only"});
         sortImportant.addActionListener(new SortListener());
+
         sortCategory = new JComboBox<>(new String[]{"All entries", "WORK", "ENTERTAINMENT", "FINANCE",
                 "DEVICES", "OTHER"});
         sortCategory.addActionListener(new SortListener());
@@ -118,48 +131,38 @@ public class PassManagerAppGui implements ListSelectionListener {
         addListener = new AddListener(addEntryButton);
         addEntryButton.addActionListener(addListener);
         addEntryButton.setActionCommand("Add entry");
-        addEntryButton.setEnabled(false);
+        addEntryButton.setEnabled(true);
 
         removeEntryButton = new JButton("Remove entry");
         removeEntryButton.addActionListener(new RemoveListener());
         removeEntryButton.setActionCommand("Remove entry");
+        removeEntryButton.setEnabled(false);
 
-        labelField = new JTextField(10);
-        labelField.addActionListener(addListener);
-        labelField.getDocument().addDocumentListener(addListener);
-
-        usernameField = new JTextField(10);
-        usernameField.addActionListener(addListener);
-
-        passwordField = new JTextField(10);
-        passwordField.addActionListener(addListener);
-
-        labelField.setText("Label");
-        usernameField.setText("Username");
-        passwordField.setText("Password");
     }
 
     public void setUpPane() {
         JPanel mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
+
         mainPane.add(welcomeLabel);
         mainPane.add(sortImportant);
         mainPane.add(sortCategory);
-        mainPane.add(labelField);
-        mainPane.add(usernameField);
-        mainPane.add(passwordField);
         mainPane.add(importantBox);
         mainPane.add(categorySelection);
         mainPane.add(addEntryButton);
+
         mainPane.add(Box.createHorizontalStrut(3));
         mainPane.add(new JSeparator(SwingConstants.VERTICAL));
         mainPane.add(Box.createHorizontalStrut(3));
+
         mainPane.add(removeEntryButton);
         mainPane.add(goToSearchButton);
         mainPane.add(gotoModButton);
         mainPane.add(saveButton);
         mainPane.add(loadButton);
+
         mainPane.setOpaque(true);
+
         mainPanel.add(listScrollPane, BorderLayout.CENTER);
         mainPanel.add(mainPane, BorderLayout.PAGE_END);
 
@@ -243,7 +246,7 @@ public class PassManagerAppGui implements ListSelectionListener {
         }
     }
 
-    public class AddListener implements ActionListener, DocumentListener {
+    public class AddListener implements ActionListener {
         private boolean enabled = false;
         private JButton button;
 
@@ -254,58 +257,15 @@ public class PassManagerAppGui implements ListSelectionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String label = labelField.getText();
-            String username = usernameField.getText();
-            String password = passwordField.getText();
-            boolean isImportant = importantBox.isSelected();
-            String chosenCat = (String)categorySelection.getSelectedItem();
-            EntryType chosenType = EntryType.valueOf(chosenCat);
+            int index = entryList.getSelectedIndex();
+            new AddTool(manager, pp, index);
 
-            try {
-                Entry newE = new Entry(label, username, password, isImportant, chosenType);
-                int index = entryList.getSelectedIndex();
-
-                if (index == -1) {
-                    index = 0;
-                } else {
-                    index++;
-                }
-
-                manager.addEntry(newE);
-                listModel.insertElementAt(newE.entryString(), index);
-                displayWelcomeLabel();
-                frame.pack();
-                entryList.setSelectedIndex(index);
-                entryList.ensureIndexIsVisible(index);
-
-            } catch (InvalidLengthException | DuplicateLabelException f) {
-                Toolkit.getDefaultToolkit().beep();
-            }
+            entryList.setSelectedIndex(index);
+            entryList.ensureIndexIsVisible(index);
 
 
         }
 
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            if (!enabled) {
-                button.setEnabled(true);
-            }
-        }
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {
-            if (e.getDocument().getLength() <= 0) {
-                button.setEnabled(false);
-                enabled = false;
-            }
-        }
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {
-            if (e.getDocument().getLength() <= 0) {
-                button.setEnabled(true);
-            }
-        }
     }
 
     public class RemoveListener implements ActionListener {
