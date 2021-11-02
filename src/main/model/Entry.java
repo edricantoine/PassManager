@@ -5,8 +5,8 @@ import persistence.Writable;
 import org.json.JSONObject;
 
 
-//This class represents an entry in the password manager with a Label, a Website value and a Password value.
-//These fields can be changed, and an entry can be displayed as a String.
+//This class represents an entry in the password manager with a Label, a Username value and a Password value.
+//Username, Password, isImportant, Type fields can be changed, and an entry can be displayed as a String.
 public class Entry implements Writable {
 
     private String label;

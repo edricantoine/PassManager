@@ -27,6 +27,7 @@ import java.io.IOException;
 public class PassManagerAppGui implements ListSelectionListener {
     private static final String JSON_LOC = "./data/pmanager.json";
     private PassManager manager;
+    private PassManagerAppGui pp;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -37,6 +38,7 @@ public class PassManagerAppGui implements ListSelectionListener {
     private JButton saveButton;
     private JButton loadButton;
     private JButton goToSearchButton;
+    private JButton gotoModButton;
 
     private JCheckBox importantBox;
 
@@ -63,6 +65,7 @@ public class PassManagerAppGui implements ListSelectionListener {
 
 
     public PassManagerAppGui() {
+        pp = this;
         jsonWriter = new JsonWriter(JSON_LOC);
         jsonReader = new JsonReader(JSON_LOC);
         catStrings = new String[]{"WORK", "ENTERTAINMENT", "FINANCE", "DEVICES", "OTHER"};
@@ -96,6 +99,9 @@ public class PassManagerAppGui implements ListSelectionListener {
         goToSearchButton = new JButton("Search for an entry");
         goToSearchButton.setActionCommand("Search for an entry");
         goToSearchButton.addActionListener(new GoSearchListener());
+        gotoModButton = new JButton("Modify entry");
+        gotoModButton.setActionCommand("Modify entry");
+        gotoModButton.addActionListener(new GoModListener());
         welcomeLabel = new JLabel("Welcome! You currently have " + manager.getNumEntries()
                 + " entry/entries of which " + manager.getNumImportantEntries() + " are important.");
         sortImportant = new JComboBox<>(new String[]{"All entries", "Important only"});
@@ -150,6 +156,7 @@ public class PassManagerAppGui implements ListSelectionListener {
         mainPane.add(Box.createHorizontalStrut(3));
         mainPane.add(removeEntryButton);
         mainPane.add(goToSearchButton);
+        mainPane.add(gotoModButton);
         mainPane.add(saveButton);
         mainPane.add(loadButton);
         mainPane.setOpaque(true);
@@ -227,9 +234,11 @@ public class PassManagerAppGui implements ListSelectionListener {
 
             if (entryList.getSelectedIndex() == -1) {
                 removeEntryButton.setEnabled(false);
+                gotoModButton.setEnabled(false);
 
             } else {
                 removeEntryButton.setEnabled(true);
+                gotoModButton.setEnabled(true);
             }
         }
     }
@@ -366,6 +375,30 @@ public class PassManagerAppGui implements ListSelectionListener {
         public void actionPerformed(ActionEvent e) {
             SearchTool searcher = new SearchTool(manager);
         }
+    }
+
+    public class GoModListener implements ActionListener {
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            Entry theEntry = manager.retrieveEntryFromStringValue(entryList.getSelectedValue());
+            ModifyTool modder = new ModifyTool(manager, theEntry, pp);
+
+            int size = listModel.getSize();
+
+            if (size == 0) {
+                gotoModButton.setEnabled(false);
+            }
+        }
+    }
+
+    public void refresh() {
+        listModel.clear();
+        pmToList();
+        displayWelcomeLabel();
+        frame.pack();
     }
 
     public class SortListener implements ActionListener {
