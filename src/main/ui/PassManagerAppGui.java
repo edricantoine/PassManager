@@ -59,6 +59,8 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     private JLabel welcomeLabel;
 
+    private SplashScreen splash;
+
 
 
     public PassManagerAppGui() {
@@ -81,6 +83,7 @@ public class PassManagerAppGui implements ListSelectionListener {
         entryList.setVisibleRowCount(5);
 
         listScrollPane = new JScrollPane(entryList);
+
 
         setUpButtonsAndFields();
         setUpMiscItems();
@@ -148,7 +151,6 @@ public class PassManagerAppGui implements ListSelectionListener {
         mainPane.add(sortImportant);
         mainPane.add(sortCategory);
         mainPane.add(importantBox);
-        mainPane.add(categorySelection);
         mainPane.add(addEntryButton);
 
         mainPane.add(Box.createHorizontalStrut(3));
@@ -321,7 +323,7 @@ public class PassManagerAppGui implements ListSelectionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             loadPassManager();
-            pmToList();
+            refresh();
             int size = listModel.getSize();
             if (size != 0) {
                 loadButton.setEnabled(false);
