@@ -47,6 +47,7 @@ public class SplashScreen {
         splashFrame.setContentPane(splashPanel);
         splashFrame.pack();
         splashFrame.setVisible(true);
+
     }
 
     public class EnterListener implements ActionListener {
