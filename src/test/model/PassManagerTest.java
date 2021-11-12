@@ -230,6 +230,7 @@ class PassManagerTest {
 
         assertEquals(ptest.retrieveEntryFromStringValue("Label: www.google.com Username: Jim Password: 12345"),
                 e1);
+        assertNull(ptest.retrieveEntryFromStringValue("abcde"));
 
     }
 
