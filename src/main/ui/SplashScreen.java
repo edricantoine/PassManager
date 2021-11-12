@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//A class representing a splash screen that displays upon starting the application
+
 public class SplashScreen {
 
     private JFrame splashFrame;
@@ -13,6 +15,9 @@ public class SplashScreen {
     private JLabel splashTextLabel;
     private JButton splashButton;
     private JLabel splashLabel;
+
+    //MODIFIES: this
+    //EFFECTS: initializes fields, sets up Swing components and GUI
 
     public SplashScreen() {
 
@@ -28,6 +33,9 @@ public class SplashScreen {
         setUpSplashGUI();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up Swing components of splash screen
+
     public void setUpSplashSwing() {
         splashPanel.add(splashTextLabel);
         splashPanel.add(splashLabel);
@@ -41,6 +49,9 @@ public class SplashScreen {
         splashPanel.add(splashPane,BorderLayout.PAGE_END);
     }
 
+    //MODIFIES: this
+    //EFFECTS: displays GUI for splash screen
+
     public void setUpSplashGUI() {
         splashFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         splashPanel.setOpaque(true);
@@ -51,6 +62,9 @@ public class SplashScreen {
     }
 
     public class EnterListener implements ActionListener {
+
+        //MODIFIES: this
+        //EFFECTS: opens the main panel
 
         @Override
         public void actionPerformed(ActionEvent e) {

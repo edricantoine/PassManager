@@ -38,6 +38,9 @@ public class ModifyTool {
         displayModGui();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up Swing components for modify screen
+
     public void setUpModSwing() {
         this.modFrame = new JFrame();
         this.modPanel = new JPanel();
@@ -55,6 +58,9 @@ public class ModifyTool {
         backButton.addActionListener(new QuitListener());
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up main panel for modify screen
+
     public void addToModPane() {
         JPanel modPane = new JPanel();
         modPane.setLayout(new BoxLayout(modPane, BoxLayout.Y_AXIS));
@@ -67,6 +73,9 @@ public class ModifyTool {
         modPane.setOpaque(true);
         modPanel.add(modPane, BorderLayout.PAGE_END);
     }
+
+    //MODIFIES: this
+    //EFFECTS: sets up GUI for modify screen
 
     public void displayModGui() {
         modFrame = new JFrame("Modify entry");
@@ -81,6 +90,8 @@ public class ModifyTool {
 
     public class QuitListener implements ActionListener {
 
+        //EFFECTS: disposes of frame
+
         @Override
         public void actionPerformed(ActionEvent e) {
             modFrame.dispose();
@@ -88,6 +99,9 @@ public class ModifyTool {
     }
 
     public class ModListener implements ActionListener {
+
+        //MODIFIES: this, manager, pmag
+        //EFFECTS: changes an entry's username, password, importance, category based on user selection
 
         @Override
         public void actionPerformed(ActionEvent e) {

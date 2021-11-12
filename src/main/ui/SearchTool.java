@@ -28,6 +28,9 @@ public class SearchTool {
         displaySearchGUI();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up Swing components for search screen
+
     public void setUpSearchSwing() {
 
         this.searchFrame = new JFrame();
@@ -43,6 +46,9 @@ public class SearchTool {
         backButton.addActionListener(new QuitListener());
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up main panel for search screen
+
     public void addToSearchPane() {
         JPanel searchPane = new JPanel();
         searchPane.setLayout(new BoxLayout(searchPane, BoxLayout.Y_AXIS));
@@ -54,6 +60,9 @@ public class SearchTool {
         searchPane.setOpaque(true);
         searchPanel.add(searchPane, BorderLayout.PAGE_END);
     }
+
+    //MODIFIES: this
+    //EFFECTS: sets up GUI for search screen
 
     public void displaySearchGUI() {
         searchFrame = new JFrame("Search");
@@ -67,6 +76,9 @@ public class SearchTool {
     }
 
     public class SearchListener implements ActionListener {
+
+        //MODIFIES: this
+        //EFFECTS: Searches for entry based on label the user types
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -84,6 +96,8 @@ public class SearchTool {
     }
 
     public class QuitListener implements ActionListener {
+
+        //EFFECTS: disposes of frame
 
         @Override
         public void actionPerformed(ActionEvent e) {

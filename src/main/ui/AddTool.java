@@ -40,6 +40,9 @@ public class AddTool {
         displayModGui();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up Swing components of entry adding screen
+
     public void setUpAddSwing() {
         addListener = new AddListener(addButton);
         this.addFrame = new JFrame();
@@ -61,6 +64,9 @@ public class AddTool {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up main panel of entry adding screen
+
     public void addToModPane() {
         JPanel addPane = new JPanel();
         addPane.setLayout(new BoxLayout(addPane, BoxLayout.Y_AXIS));
@@ -79,6 +85,9 @@ public class AddTool {
         addPanel.add(addPane, BorderLayout.PAGE_END);
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up GUI of entry adding screen
+
     public void displayModGui() {
         addFrame = new JFrame("Add entry");
         addFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,6 +100,8 @@ public class AddTool {
     }
 
     public class QuitListener implements ActionListener {
+
+        //EFFECTS: disposes of frame
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -105,6 +116,9 @@ public class AddTool {
         public AddListener(JButton button) {
             this.button = button;
         }
+
+        //MODIFIES: this, manager, pmag
+        //EFFECTS: creates a new entry based on the user's selections and adds it to manager
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -137,12 +151,19 @@ public class AddTool {
 
         }
 
+        //MODIFIES: this
+        //EFFECTS: if the button is disabled, enable it
+
         @Override
         public void insertUpdate(DocumentEvent e) {
             if (!enabled) {
                 button.setEnabled(true);
             }
         }
+
+        //MODIFIES: this
+        //EFFECTS: if document event's document is zero entries long, sets button to be disabled
+        //         (for remove events)
 
         @Override
         public void removeUpdate(DocumentEvent e) {
@@ -152,6 +173,9 @@ public class AddTool {
             }
         }
 
+        //MODIFIES: this
+        //EFFECTS: if document event's document is zero entries long, sets button to be enabled
+        //         (for change/update events)
         @Override
         public void changedUpdate(DocumentEvent e) {
             if (e.getDocument().getLength() <= 0) {

@@ -94,6 +94,9 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up miscellaneous items, checkboxes, buttons, etc. in Swing
+
     public void setUpMiscItems() {
         importantBox = new JCheckBox("Make entry important");
 
@@ -129,6 +132,9 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up buttons and fields in Swing
+
     public void setUpButtonsAndFields() {
         addEntryButton = new JButton("Add entry");
         addListener = new AddListener(addEntryButton);
@@ -142,6 +148,9 @@ public class PassManagerAppGui implements ListSelectionListener {
         removeEntryButton.setEnabled(false);
 
     }
+
+    //MODIFIES: this
+    //EFFECTS: sets up the main panel in Swing
 
     public void setUpPane() {
         JPanel mainPane = new JPanel();
@@ -186,13 +195,16 @@ public class PassManagerAppGui implements ListSelectionListener {
     }
 
 
-
+    //MODIFIES: this
+    //EFFECTS: converts a pass manager into elements in a ListModel
     private void pmToList() {
         for (Entry e : manager.getEntries()) {
             listModel.insertElementAt(e.entryString(), 0);
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: converts a pass manager into elements in a ListModel with only important entries
     private void pmToImportantList() {
         for (Entry e : manager.getEntries()) {
             if (e.getImportant()) {
@@ -200,6 +212,8 @@ public class PassManagerAppGui implements ListSelectionListener {
             }
         }
     }
+    //MODIFIES: this
+    //EFFECTS: converts a pass manager into elements in a ListModel with only entries of a certain category
 
     private void pmToListOfType(EntryType e) {
         for (Entry h : manager.getEntries()) {
@@ -208,6 +222,9 @@ public class PassManagerAppGui implements ListSelectionListener {
             }
         }
     }
+    //MODIFIES: this
+    //EFFECTS: converts a pass manager into elements in a ListModel with only important entries of a certain
+    //         category
 
     private void pmToImportantListOfType(EntryType e) {
         for (Entry h : manager.getEntries()) {
@@ -216,6 +233,9 @@ public class PassManagerAppGui implements ListSelectionListener {
             }
         }
     }
+
+    //MODIFIES: this
+    //initializes JFrame and displays GUI
 
     private void displayGUI() {
         frame = new JFrame("Password Manager");
@@ -228,10 +248,16 @@ public class PassManagerAppGui implements ListSelectionListener {
         frame.setVisible(true);
     }
 
+    //MODIFIES: this
+    //sets welcomeLabel to display correct num of entries and important entries
+
     private void displayWelcomeLabel() {
         welcomeLabel.setText("Welcome! You currently have " + manager.getNumEntries()
                 + " entry/entries of which " + manager.getNumImportantEntries() + " are important.");
     }
+
+    //MODIFIES: this
+    //EFFECTS: sets modify and remove buttons to false if there are no valid entries to operate on
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -248,6 +274,8 @@ public class PassManagerAppGui implements ListSelectionListener {
         }
     }
 
+    //AddListener opens a new AddTool, where the user can then add a new entry
+
     public class AddListener implements ActionListener {
         private boolean enabled = false;
         private JButton button;
@@ -255,6 +283,9 @@ public class PassManagerAppGui implements ListSelectionListener {
         public AddListener(JButton button) {
             this.button = button;
         }
+
+        //MODIFIES: this
+        //EFFECTS: opens a new AddTool, sets selected index to a valid entry afterward
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -271,6 +302,9 @@ public class PassManagerAppGui implements ListSelectionListener {
     }
 
     public class RemoveListener implements ActionListener {
+
+        //MODIFIES: this
+        //EFFECTS: removes entry from password manager
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -304,6 +338,9 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     public class SaveListener implements ActionListener {
 
+        //MODIFIES: this
+        //EFFECTS: saves data to JSON file
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -320,6 +357,9 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     public class LoadListener implements ActionListener {
 
+        //MODIFIES: this
+        //EFFECTS: loads data from JSON file
+
         @Override
         public void actionPerformed(ActionEvent e) {
             loadPassManager();
@@ -333,6 +373,9 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     public class GoSearchListener implements ActionListener {
 
+
+        //EFFECTS: opens a new SearchTool
+
         @Override
         public void actionPerformed(ActionEvent e) {
             SearchTool searcher = new SearchTool(manager);
@@ -341,7 +384,8 @@ public class PassManagerAppGui implements ListSelectionListener {
 
     public class GoModListener implements ActionListener {
 
-
+        //MODIFIES: this
+        //EFFECTS: opens a new ModifyTool, and if the entry list is empty sets button to be disabled
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -356,6 +400,9 @@ public class PassManagerAppGui implements ListSelectionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: "refreshes" the password manager: clears lists then creates a new one, also updating the label
+
     public void refresh() {
         listModel.clear();
         pmToList();
@@ -364,6 +411,9 @@ public class PassManagerAppGui implements ListSelectionListener {
     }
 
     public class SortListener implements ActionListener {
+
+        //MODIFIES: this
+        //EFFECTS: sorts entries in list box by importance, category, or both
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -375,6 +425,8 @@ public class PassManagerAppGui implements ListSelectionListener {
             handleSort(sortingByImportance, categoryToSortBy, chosenType);
         }
 
+        //EFFECTS: takes selected category in combobox and returns its corresponding EntryType
+
         public EntryType chooseType(String categoryToSortBy) {
             if (!categoryToSortBy.equals("All entries")) {
                 return EntryType.valueOf(categoryToSortBy);
@@ -382,6 +434,9 @@ public class PassManagerAppGui implements ListSelectionListener {
                 return EntryType.OTHER;
             }
         }
+
+        //MODFIES: this
+        //EFFECTS: causes the list to only display entries of types/importance that the user has selected
 
         public void handleSort(String sortingByImportance, String categoryToSortBy, EntryType chosenType) {
             if (sortingByImportance.equals("Important only")) {
