@@ -29,6 +29,7 @@ public class AddTool {
     private JButton addButton;
     private JButton backButton;
     private JPanel addPanel;
+    private JLabel errorLabel;
     private AddListener addListener;
 
     public AddTool(PassManager pm, PassManagerAppGui pp, int index) {
@@ -53,6 +54,7 @@ public class AddTool {
         newUser.setText("Username");
         newPass = new JTextField(10);
         newPass.setText("Password");
+        errorLabel = new JLabel("");
         newImp = new JCheckBox("Make entry important");
         newCat = new JComboBox<>(new String[]{"WORK", "ENTERTAINMENT", "FINANCE", "DEVICES", "OTHER"});
         addButton = new JButton("Add entry");
@@ -79,6 +81,7 @@ public class AddTool {
         addPane.add(newImp);
 
         addPane.add(addButton);
+        addPane.add(errorLabel);
         addPane.add(backButton);
 
         addPane.setOpaque(true);
@@ -141,12 +144,18 @@ public class AddTool {
 
                 manager.addEntry(newE);
                 pmag.refresh();
+                addFrame.dispose();
 
-            } catch (InvalidLengthException | DuplicateLabelException f) {
+            } catch (DuplicateLabelException f) {
                 Toolkit.getDefaultToolkit().beep();
+                errorLabel.setText("An entry with that name already exists.");
+                addFrame.pack();
+            } catch (InvalidLengthException x) {
+                Toolkit.getDefaultToolkit().beep();
+                errorLabel.setText("One or more fields were empty.");
+                addFrame.pack();
             }
 
-            addFrame.dispose();
 
 
         }

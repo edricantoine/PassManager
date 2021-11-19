@@ -27,6 +27,7 @@ public class ModifyTool {
     private JButton backButton;
     private JPanel modPanel;
     private ModListener modListener;
+    private JLabel modLabel;
 
     public ModifyTool(PassManager pm, Entry en, PassManagerAppGui pp) {
         this.manager = pm;
@@ -44,6 +45,7 @@ public class ModifyTool {
     public void setUpModSwing() {
         this.modFrame = new JFrame();
         this.modPanel = new JPanel();
+        this.modLabel = new JLabel("");
         newUser = new JTextField(10);
         newUser.setText("New User");
         newPass = new JTextField(10);
@@ -69,6 +71,7 @@ public class ModifyTool {
         modPane.add(newCat);
         modPane.add(newImp);
         modPane.add(modButton);
+        modPane.add(modLabel);
         modPane.add(backButton);
         modPane.setOpaque(true);
         modPanel.add(modPane, BorderLayout.PAGE_END);
@@ -121,14 +124,17 @@ public class ModifyTool {
                 }
 
                 entry.setType(newTp);
+                pmag.refresh();
+                modFrame.dispose();
 
             } catch (InvalidLengthException q) {
                 Toolkit.getDefaultToolkit().beep();
+                modLabel.setText("One or more fields were empty.");
+                modFrame.pack();
             }
 
-            pmag.refresh();
 
-            modFrame.dispose();
+
 
         }
     }
