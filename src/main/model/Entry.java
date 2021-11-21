@@ -63,6 +63,8 @@ public class Entry implements Writable {
             throw new InvalidLengthException();
         } else {
             this.password = newPassword;
+            EventLog.getInstance().logEvent(new Event("Changed password of entry with label "
+                    + this.getLabel()));
         }
 
     }
@@ -75,6 +77,8 @@ public class Entry implements Writable {
             throw new InvalidLengthException();
         } else {
             this.username = newName;
+            EventLog.getInstance().logEvent(new Event("Changed username of entry with label "
+                    + this.getLabel()));
         }
     }
 
@@ -82,18 +86,24 @@ public class Entry implements Writable {
     //EFFECTS: sets this entry's type to e
     public void setType(EntryType e) {
         this.type = e;
+        EventLog.getInstance().logEvent(new Event("Changed category of entry with label "
+                + this.getLabel()));
     }
 
     //MODIFIES: this
     //EFFECTS: marks this entry as important
     public void makeImportant() {
         this.isImportant = true;
+        EventLog.getInstance().logEvent(new Event("Made entry with label "
+                + this.getLabel() + " important"));
     }
 
     //MODIFIES: this
     //EFFECTS: marks this entry as unimportant
     public void makeUnimportant() {
         this.isImportant = false;
+        EventLog.getInstance().logEvent(new Event("Made entry with label "
+                + this.getLabel() + " unimportant"));
     }
 
     //EFFECTS: returns string representation of an entry

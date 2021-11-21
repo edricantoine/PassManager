@@ -26,3 +26,36 @@ and password.
 - As a user, I want to be able to save the list of my entries to a file.
 - As a user, I want to be able to load my entries from a file, and resume from where I left off when I last
 used the application.
+
+## Phase 4 Task 2
+
+**An example of the EventLog being printed to console:**
+
+Sat Nov 20 18:18:11 PST 2021
+
+Added an entry with label user1
+
+Sat Nov 20 18:18:36 PST 2021
+
+Added an entry with label user2
+
+Sat Nov 20 18:18:56 PST 2021
+
+Added an entry with label user3
+
+
+Sat Nov 20 18:19:16 PST 2021
+
+Removed an entry with label user3
+
+Sat Nov 20 18:19:23 PST 2021
+
+Changed username of entry with label user2
+
+Sat Nov 20 18:19:23 PST 2021
+
+Made entry with label user2 unimportant
+
+Sat Nov 20 18:19:23 PST 2021
+
+Changed category of entry with label user2

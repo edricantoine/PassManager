@@ -66,7 +66,7 @@ public class PassManager implements Writable {
 
 
     //MODIFIES: this
-    //EFFECTS: adds e to entries
+    //EFFECTS: adds e to entries and adds this info to EventLog
     public void addEntry(Entry e) throws DuplicateLabelException {
         for (Entry h : entries) {
             if (h.getLabel().equals(e.getLabel())) {
@@ -74,14 +74,17 @@ public class PassManager implements Writable {
             }
         }
         this.entries.add(e);
+        EventLog.getInstance().logEvent(new Event("Added an entry with label " + e.getLabel()));
     }
 
     //MODIFIES: this
-    //EFFECTS: if e is in entries, removes e from entries and returns true. Returns false otherwise.
+    //EFFECTS: if e is in entries, removes e from entries, adds info to EventLog, and returns true.
+    //         Returns false otherwise.
     public Boolean removeEntry(Entry e) {
 
         if (this.entries.contains(e)) {
             this.entries.remove(e);
+            EventLog.getInstance().logEvent(new Event("Removed an entry with label " + e.getLabel()));
             return true;
         } else {
             return false;
