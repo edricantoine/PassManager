@@ -29,7 +29,7 @@ used the application.
 
 ## Phase 4 Task 2
 
-**An example of the EventLog being printed to console:**
+**An example of EventLog being printed to console:**
 
 Sat Nov 20 18:18:11 PST 2021
 
