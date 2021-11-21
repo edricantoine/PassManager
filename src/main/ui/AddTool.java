@@ -135,23 +135,19 @@ public class AddTool {
 
             try {
                 Entry newE = new Entry(label, username, password, isImportant, chosenType);
-
                 if (idx == -1) {
                     idx = 0;
                 } else {
                     idx++;
                 }
-
                 manager.addEntry(newE);
                 pmag.refresh();
                 addFrame.dispose();
 
             } catch (DuplicateLabelException f) {
-                Toolkit.getDefaultToolkit().beep();
                 errorLabel.setText("An entry with that name already exists.");
                 addFrame.pack();
             } catch (InvalidLengthException x) {
-                Toolkit.getDefaultToolkit().beep();
                 errorLabel.setText("One or more fields were empty.");
                 addFrame.pack();
             }

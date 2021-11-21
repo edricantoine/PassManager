@@ -33,7 +33,7 @@ public class Event {
      * Gets the description of this event.
      * @return  the description of the event
      */
-    public String getDescription () {
+    public String getDescription() {
         return description;
     }
 
