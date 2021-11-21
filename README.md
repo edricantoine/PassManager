@@ -59,3 +59,10 @@ Made entry with label user2 unimportant
 Sat Nov 20 18:19:23 PST 2021
 
 Changed category of entry with label user2
+
+## Phase 4 Task 3
+
+If I had more time, I would refactor my code in order to increase cohesion and 
+get rid of as much problematic coupling as possible. For example, I could refactor classes 
+so that they would adhere to the Single Responsibility Principle as I am sure there are areas in my
+code in which this design principle is not followed.

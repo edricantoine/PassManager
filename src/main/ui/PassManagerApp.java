@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 //Password manager application, handles console UI and user input
+//OUTDATED, NO LONGER PART OF THE APPLICATION.
 
 public class PassManagerApp {
     private static final String JSON_LOC = "./data/pmanager.json";
