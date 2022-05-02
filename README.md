@@ -11,3 +11,5 @@ remembering usernames and passwords.
 This project is of interest to me since I have always had trouble keeping my passwords and usernames in one place, which
 has caused me much more inconvenience than necessary in certain situations. I believe that this application will help
 myself and others like me to be more organized.
+
+The .jar file should open the application when double-clicked, if not, you'll have to build and run the application manually (using an IDE or something).
